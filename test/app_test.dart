@@ -21,9 +21,11 @@ void main() {
       testWidgets(
         "renders AppBar",
         (tester) async {
-          await tester.pumpWidget(const MaterialApp(
-            home: AppView(),
-          ));
+          await tester.pumpWidget(
+            const MaterialApp(
+              home: AppView(),
+            ),
+          );
           expect(find.byType(AppBar), findsOneWidget);
         },
       );
@@ -33,9 +35,11 @@ void main() {
           testWidgets(
             "renders title",
             (tester) async {
-              await tester.pumpWidget(const MaterialApp(
-                home: AppView(),
-              ));
+              await tester.pumpWidget(
+                const MaterialApp(
+                  home: AppView(),
+                ),
+              );
               expect(find.text("Movie Buddy"), findsOneWidget);
             },
           );
