@@ -1,0 +1,35 @@
+name: Flutter Workflow
+on:
+  workflow_call:
+    secrets:
+      CODECOV_TOKEN:
+        required: true
+jobs:
+  build:
+    runs-on: ubuntu-latests
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v3.3.0
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2.8.0
+        with:
+          channel: "stable"
+          cache: true
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+      - name: ✨ Check Formatting
+        run: flutter format --set-exit-if-changed .
+      - name: 🕵️ Analyze
+        run: flutter analyze .
+      - name: 🧪 Run Tests
+        run: flutter test --coverage
+      - name: 📊 Check Code Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v2
+        with:
+          path: ./coverage/lcov.info
+          min_coverage: 100
+      - name: 🚀 Upload to CodeCov
+        uses: codecov/codecov-action@v3.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
