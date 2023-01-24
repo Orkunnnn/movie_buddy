@@ -40,6 +40,13 @@ void main() {
           );
         },
       );
+      group(
+        "updateTheme",
+        () {
+          final cubit = ThemeCubit()..updateTheme(ThemeMode.dark);
+          expect(cubit.state, ThemeMode.dark);
+        },
+      );
     },
   );
 }
