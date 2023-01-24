@@ -10,7 +10,7 @@ class ThemeCubit extends HydratedCubit<ThemeMode> {
 
   @override
   ThemeMode? fromJson(Map<String, dynamic> json) {
-    switch (json as String) {
+    switch (json["theme"] as String) {
       case "light":
         return ThemeMode.light;
       case "dark":
