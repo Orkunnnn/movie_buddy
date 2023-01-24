@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import 'package:movie_buddy/core/l10n/extensions/localization_extension.dart';
+import 'package:movie_buddy/core/l10n/cubit/localization_cubit.dart';
+import 'package:movie_buddy/core/theme/cubit/theme_cubit.dart';
+import 'package:movie_buddy/features/home/views/home_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      home: AppView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => LocalizationCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ThemeCubit(),
+        )
+      ],
+      child: const AppView(),
     );
   }
 }
@@ -21,13 +29,23 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Movie Buddy"),
-      ),
-      body: Center(
-        child: Text(context.locale.helloWorld),
-      ),
+    return BlocBuilder<LocalizationCubit, Locale?>(
+      builder: (context, locale) {
+        return BlocBuilder<ThemeCubit, ThemeMode>(
+          builder: (context, themeMode) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              theme: ThemeData.light(),
+              darkTheme: ThemeData.dark(),
+              themeMode: themeMode,
+              locale: locale,
+              home: const HomePage(),
+            );
+          },
+        );
+      },
     );
   }
 }
