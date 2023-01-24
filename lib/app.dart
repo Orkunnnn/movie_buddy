@@ -20,13 +20,13 @@ class App extends StatelessWidget {
           create: (context) => ThemeCubit(),
         )
       ],
-      child: const AppView(),
+      child: const _AppView(),
     );
   }
 }
 
-class AppView extends StatelessWidget {
-  const AppView({super.key});
+class _AppView extends StatelessWidget {
+  const _AppView();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,6 @@ class AppView extends StatelessWidget {
         return BlocBuilder<ThemeCubit, ThemeMode>(
           builder: (context, themeMode) {
             return MaterialApp(
-              debugShowCheckedModeBanner: false,
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               theme: AppTheme.light,
