@@ -1,6 +1,7 @@
 # Movie Buddy 🎬
 
 [![ci][ci_badge]][ci_link]
+[![codecov](https://codecov.io/gh/Orkunnnn/movie_buddy/branch/main/graph/badge.svg?token=S0PXNROYW3)](https://codecov.io/gh/Orkunnnn/movie_buddy)
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![License: MIT][license_badge]][license_link]
 
