@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movie_buddy/app.dart';
 
@@ -23,6 +24,8 @@ void main() {
         (tester) async {
           await tester.pumpWidget(
             const MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
               home: AppView(),
             ),
           );
@@ -37,6 +40,9 @@ void main() {
             (tester) async {
               await tester.pumpWidget(
                 const MaterialApp(
+                  localizationsDelegates:
+                      AppLocalizations.localizationsDelegates,
+                  supportedLocales: AppLocalizations.supportedLocales,
                   home: AppView(),
                 ),
               );
