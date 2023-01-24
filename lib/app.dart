@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:movie_buddy/core/l10n/cubit/localization_cubit.dart';
+import 'package:movie_buddy/core/theme/app_theme.dart';
 import 'package:movie_buddy/core/theme/cubit/theme_cubit.dart';
 import 'package:movie_buddy/features/home/views/home_page.dart';
 
@@ -37,8 +38,8 @@ class AppView extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
-              theme: ThemeData.light(),
-              darkTheme: ThemeData.dark(),
+              theme: AppTheme.light,
+              darkTheme: AppTheme.dark,
               themeMode: themeMode,
               locale: locale,
               home: const HomePage(),
