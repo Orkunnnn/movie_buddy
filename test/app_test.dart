@@ -59,7 +59,7 @@ void main() {
         "AppBar",
         () {
           testWidgets(
-            "renders title",
+            "renders icon",
             (tester) async {
               when(
                 () => themeCubit.state,
@@ -81,7 +81,7 @@ void main() {
                   ),
                 ),
               );
-              expect(find.text("Movie Buddy"), findsOneWidget);
+              expect(find.byType(Icon), findsOneWidget);
             },
           );
         },
