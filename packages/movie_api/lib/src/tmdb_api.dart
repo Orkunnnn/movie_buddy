@@ -9,24 +9,15 @@ import 'package:movie_api/src/models/raw_movie_popular.dart';
 
 class MovieApi {
   MovieApi({
-    required this.baseUrl,
-    required http.Client httpClient,
-  }) {
-    movies = _Movies(baseUrl, httpClient);
-  }
-  final String baseUrl;
-  late final _Movies movies;
-}
+    http.Client? httpClient,
+  }) : _httpClient = httpClient ?? http.Client();
 
-class _Movies {
-  _Movies(this.baseUrl, this._httpClient);
-
+  static const String _baseUrl = "api.themoviedb.org";
   final http.Client _httpClient;
-  final String baseUrl;
 
   Future<RawMovieDetails> getDetails(int movieId, String languageCode) async {
     final movieDetailsRequest = Uri.https(
-      baseUrl,
+      _baseUrl,
       "/3/movie/$movieId",
       {"api_key": Env.tmdbApiKey, "language": languageCode},
     );
@@ -44,7 +35,7 @@ class _Movies {
 
   Future<List<RawMoviePopular>> getPopular(String languageCode) async {
     final moviePopularRequest = Uri.https(
-      baseUrl,
+      _baseUrl,
       "/3/movie/popular",
       {"api_key": Env.tmdbApiKey, "language": languageCode},
     );
