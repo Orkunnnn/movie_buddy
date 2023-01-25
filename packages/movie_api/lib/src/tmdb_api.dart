@@ -13,12 +13,13 @@ class MovieApi {
   }) : _httpClient = httpClient ?? http.Client();
 
   static const String _baseUrl = "api.themoviedb.org";
+  static const String _moviePath = "/3/movie";
   final http.Client _httpClient;
 
   Future<RawMovieDetails> getDetails(int movieId, String languageCode) async {
     final movieDetailsRequest = Uri.https(
       _baseUrl,
-      "/3/movie/$movieId",
+      "$_moviePath/$movieId",
       {"api_key": Env.tmdbApiKey, "language": languageCode},
     );
     final movieDetailsResponse = await _httpClient.get(movieDetailsRequest);
@@ -36,7 +37,7 @@ class MovieApi {
   Future<List<RawMoviePopular>> getPopular(String languageCode) async {
     final moviePopularRequest = Uri.https(
       _baseUrl,
-      "/3/movie/popular",
+      "$_moviePath/popular",
       {"api_key": Env.tmdbApiKey, "language": languageCode},
     );
 
