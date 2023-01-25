@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Movie Buddy"),
+        actions: const [],
       ),
       body: Center(
         child: Column(
