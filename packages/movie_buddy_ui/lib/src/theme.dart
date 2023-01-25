@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:movie_buddy_ui/src/colors.dart';
 import 'package:movie_buddy_ui/src/layout/layout.dart';
 import 'package:movie_buddy_ui/src/typography/typography.dart';
@@ -6,11 +7,12 @@ import 'package:movie_buddy_ui/src/typography/typography.dart';
 abstract class MovieBuddyTheme {
   static ThemeData get dark {
     return ThemeData(
+      scaffoldBackgroundColor: MovieBuddyColors.black,
       colorScheme: ColorScheme.fromSwatch(
         accentColor: MovieBuddyColors.black,
         brightness: Brightness.dark,
       ),
-      textTheme: _textTheme,
+      textTheme: _textTheme.apply(bodyColor: MovieBuddyColors.white),
       elevatedButtonTheme: _darkElevatedButtonThemeData,
       textButtonTheme: _darkTextButtonThemeData,
       appBarTheme: _darkAppBarTheme,
@@ -47,8 +49,20 @@ abstract class MovieBuddyTheme {
     );
   }
 
+  static IconThemeData get _darkIconThemeData {
+    return const IconThemeData(color: MovieBuddyColors.white);
+  }
+
   static AppBarTheme get _darkAppBarTheme {
-    return const AppBarTheme(color: MovieBuddyColors.lightGrey, elevation: 0);
+    return AppBarTheme(
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
+      ),
+      color: MovieBuddyColors.transparent,
+      elevation: 0,
+      actionsIconTheme: _darkIconThemeData,
+    );
   }
 
   static TextButtonThemeData get _darkTextButtonThemeData {
