@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_buddy/core/l10n/cubit/localization_cubit.dart';
-import 'package:movie_buddy/core/theme/cubit/theme_cubit.dart';
+import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
+import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
+import 'package:movie_buddy_ui/movie_buddy_ui.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
+
+  static Route<void> route({
+    required LocalizationCubit localizationCubit,
+    required ThemeCubit themeCubit,
+  }) =>
+      AppPageRoute(
+        builder: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: localizationCubit),
+            BlocProvider.value(value: themeCubit)
+          ],
+          child: const SettingsPage(),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +70,13 @@ class SettingsPage extends StatelessWidget {
                   child: const Text("Dark"),
                 )
               ],
+            ),
+          ),
+          Padding(
+            padding: MovieBuddyPadding.horizontal.medium,
+            child: ElevatedButton(
+              onPressed: () {},
+              child: const Text("Watch Now"),
             ),
           )
         ],
