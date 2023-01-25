@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:movie_buddy/core/theme/cubit/theme_cubit.dart';
+import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
 
 import '../../../helpers/hydrated_bloc.dart';
 

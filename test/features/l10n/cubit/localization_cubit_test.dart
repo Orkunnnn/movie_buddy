@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:movie_buddy/core/l10n/cubit/localization_cubit.dart';
+import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
 
 import '../../../helpers/hydrated_bloc.dart';
 
