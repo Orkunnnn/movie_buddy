@@ -4,8 +4,7 @@ import 'dart:io' if (dart.library.html) "dart:html";
 import "package:http/http.dart" as http;
 import 'package:movie_api/src/env/env.dart';
 import 'package:movie_api/src/errors/errors.dart';
-import 'package:movie_api/src/models/raw_movie_details.dart';
-import 'package:movie_api/src/models/raw_movie_popular.dart';
+import 'package:movie_api/src/models/models.dart';
 
 class MovieApi {
   MovieApi({
@@ -34,7 +33,7 @@ class MovieApi {
     return RawMovieDetails.fromJson(movieDetailsJson);
   }
 
-  Future<List<RawMoviePopular>> getPopular(String languageCode) async {
+  Future<List<RawMovie>> getPopular(String languageCode) async {
     final moviePopularRequest = Uri.https(
       _baseUrl,
       "$_moviePath/popular",
@@ -55,7 +54,7 @@ class MovieApi {
     final results = moviePopularJson["results"] as List;
 
     return results
-        .map((e) => RawMoviePopular.fromJson(e as Map<String, dynamic>))
+        .map((e) => RawMovie.fromJson(e as Map<String, dynamic>))
         .toList();
   }
 }

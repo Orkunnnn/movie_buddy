@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part "raw_movie_popular.g.dart";
+part "raw_movie.g.dart";
 
 @JsonSerializable()
-class RawMoviePopular {
-  RawMoviePopular(
+class RawMovie {
+  RawMovie(
     this.title,
     this.overview,
     this.releaseDate,
@@ -12,8 +12,8 @@ class RawMoviePopular {
     this.genres,
   );
 
-  factory RawMoviePopular.fromJson(Map<String, dynamic> json) =>
-      _$RawMoviePopularFromJson(json);
+  factory RawMovie.fromJson(Map<String, dynamic> json) =>
+      _$RawMovieFromJson(json);
 
   final String title;
   final String overview;
@@ -21,5 +21,5 @@ class RawMoviePopular {
   final String posterPath;
   final List<int> genres;
 
-  Map<String, dynamic> toJson() => _$RawMoviePopularToJson(this);
+  Map<String, dynamic> toJson() => _$RawMovieToJson(this);
 }

@@ -3,8 +3,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:movie_api/src/env/env.dart';
 import 'package:movie_api/src/errors/errors.dart';
 import 'package:movie_api/src/models/raw_genre.dart';
+import 'package:movie_api/src/models/raw_movie.dart';
 import 'package:movie_api/src/models/raw_movie_details.dart';
-import 'package:movie_api/src/models/raw_movie_popular.dart';
 import 'package:movie_api/src/tmdb_api.dart';
 import 'package:test/test.dart';
 
@@ -237,7 +237,7 @@ void main() {
               ).thenAnswer((invocation) async => response);
               final actual = await movieApi.getPopular("tr");
               expect(actual, [
-                isA<RawMoviePopular>()
+                isA<RawMovie>()
                     .having((p0) => p0.title, "title", "title")
                     .having((p0) => p0.overview, "overview", "overview")
                     .having(

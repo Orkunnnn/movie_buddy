@@ -1,17 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'raw_movie_popular.dart';
+part of 'raw_movie.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RawMoviePopular _$RawMoviePopularFromJson(Map<String, dynamic> json) =>
-    $checkedCreate(
-      'RawMoviePopular',
+RawMovie _$RawMovieFromJson(Map<String, dynamic> json) => $checkedCreate(
+      'RawMovie',
       json,
       ($checkedConvert) {
-        final val = RawMoviePopular(
+        final val = RawMovie(
           $checkedConvert('title', (v) => v as String),
           $checkedConvert('overview', (v) => v as String),
           $checkedConvert('release_date', (v) => v as String),
@@ -27,8 +26,7 @@ RawMoviePopular _$RawMoviePopularFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$RawMoviePopularToJson(RawMoviePopular instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$RawMovieToJson(RawMovie instance) => <String, dynamic>{
       'title': instance.title,
       'overview': instance.overview,
       'release_date': instance.releaseDate,
