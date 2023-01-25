@@ -43,8 +43,13 @@ void main() {
       group(
         "updateTheme",
         () {
-          final cubit = ThemeCubit()..updateTheme(ThemeMode.dark);
-          expect(cubit.state, ThemeMode.dark);
+          test(
+            "works correctly",
+            () {
+              final cubit = ThemeCubit()..updateTheme(ThemeMode.dark);
+              expect(cubit.state, ThemeMode.dark);
+            },
+          );
         },
       );
     },
