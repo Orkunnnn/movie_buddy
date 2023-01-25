@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:movie_buddy/app.dart';
-import 'package:movie_buddy/core/l10n/cubit/localization_cubit.dart';
-import 'package:movie_buddy/core/theme/cubit/theme_cubit.dart';
+import 'package:movie_buddy/home/views/home_page.dart';
+import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
+import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
 
 import 'helpers/hydrated_bloc.dart';
 
@@ -23,18 +23,6 @@ void main() {
     () {
       themeCubit = MockThemeCubit();
       localizationCubit = MockLocalizationCubit();
-    },
-  );
-  group(
-    "App",
-    () {
-      testWidgets(
-        "renders AppView",
-        (tester) async {
-          await tester.pumpWidget(const App());
-          expect(find.byType(AppView), findsOneWidget);
-        },
-      );
     },
   );
   group(
@@ -60,7 +48,7 @@ void main() {
               child: const MaterialApp(
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,
-                home: AppView(),
+                home: HomePage(),
               ),
             ),
           );
@@ -71,7 +59,7 @@ void main() {
         "AppBar",
         () {
           testWidgets(
-            "renders title",
+            "renders icon",
             (tester) async {
               when(
                 () => themeCubit.state,
@@ -89,11 +77,11 @@ void main() {
                     localizationsDelegates:
                         AppLocalizations.localizationsDelegates,
                     supportedLocales: AppLocalizations.supportedLocales,
-                    home: AppView(),
+                    home: HomePage(),
                   ),
                 ),
               );
-              expect(find.text("Movie Buddy"), findsOneWidget);
+              expect(find.byType(Icon), findsOneWidget);
             },
           );
         },
