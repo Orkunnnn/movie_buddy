@@ -170,7 +170,7 @@ void main() {
             },
           );
           test(
-            "throws MovieNotFound on non-200 response",
+            "throws MovieRequestFailure on non-200 response",
             () async {
               final response = MockResponse();
               when(
