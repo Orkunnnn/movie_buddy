@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:movie_buddy/home/views/home_page.dart';
 import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
+import 'package:movie_buddy/l10n/l10n.dart';
 import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
 import 'package:movie_buddy_ui/movie_buddy_ui.dart';
 
