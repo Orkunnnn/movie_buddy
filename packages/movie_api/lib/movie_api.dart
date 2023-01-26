@@ -1,7 +1,5 @@
 library movie_api;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export "src/errors/errors.dart";
+export "src/models/models.dart";
+export "src/tmdb_api.dart";
