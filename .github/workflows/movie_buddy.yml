@@ -1,37 +1,15 @@
 name: movie_buddy
+
 on:
   pull_request:
-    paths:
-      - ".github/workflows/ci.yaml"
-      - "lib/**"
-      - "test/**"
-      - "pubspec.yaml"
-  pull_request_target:
-    branches:
+    branches: 
       - main
-    paths:
-      - ".github/workflows/ci.yaml"
-      - "lib/**"
-      - "test/**"
-      - "pubspec.yaml"
   push:
     branches:
       - main
-    path:
-      - ".github/workflows/ci.yaml"
-      - "lib/**"
-      - "test/**"
-      - "pubspec.yaml"
 jobs:
-  verify-flutter:
-    uses: ./.github/workflows/flutter.yml
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-  verify-semantic-pull-request:
-    uses: ./.github/workflows/semantic_pull_request.yml
   build:
-    needs: [verify-flutter, verify-semantic-pull-request]
-    runs-on: ubuntu-latest
-    steps:
-      - name: done
-        run: echo "done"
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      coverage_excludes: "**/*.g.dart"
+  
