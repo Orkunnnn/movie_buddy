@@ -19,7 +19,7 @@ dependencies:
   melos: ^2.9.0
   movie_buddy_ui:
     path: packages/movie_buddy_ui
-  path_provider: ^2.0.11
+  path_provider: ^2.0.12
 
 dev_dependencies:
   bloc_test: ^9.1.0

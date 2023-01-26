@@ -1,0 +1,16 @@
+name: movie_api
+
+on:
+  pull_request:
+    paths:
+      - "packages/movie_api/**"
+      - ".github/workflows/movie_api.yaml"
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
+    with:
+      working_directory: packages/movie_api
+      coverage_excludes: "**/*.g.dart"
