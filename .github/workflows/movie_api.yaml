@@ -13,3 +13,4 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
     with:
       working_directory: packages/movie_api
+      exclude_coverage: "**/*.g.dart"
