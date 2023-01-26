@@ -140,7 +140,7 @@ void main() {
         },
       );
       group(
-        "getPopular",
+        "getMoviesPopular",
         () {
           test(
             "makes correct http request",
@@ -156,14 +156,14 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               try {
-                await movieApi.getPopular("tr");
+                await movieApi.getMoviesPopular("tr");
               } catch (_) {}
               verify(
                 () => httpClient.get(
                   Uri.https(
                     baseUrl,
                     "/3/movie/popular",
-                    {"api_key": Env.tmdbApiKey, "language": "tr"},
+                    {"api_key": Env.tmdbApiKey, "language": "tr", "page": "1"},
                   ),
                 ),
               ).called(1);
@@ -183,7 +183,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               await expectLater(
-                movieApi.getPopular("tr"),
+                movieApi.getMoviesPopular("tr"),
                 throwsA(isA<MovieRequestFailure>()),
               );
             },
@@ -202,13 +202,13 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               await expectLater(
-                movieApi.getPopular("tr"),
+                movieApi.getMoviesPopular("tr"),
                 throwsA(isA<MovieNotFound>()),
               );
             },
           );
           test(
-            "returns RawMoviePopular on valid response",
+            "returns RawMovie on valid response",
             () async {
               final response = MockResponse();
               when(
@@ -235,7 +235,241 @@ void main() {
               when(
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
-              final actual = await movieApi.getPopular("tr");
+              final actual = await movieApi.getMoviesPopular("tr");
+              expect(actual, [
+                isA<RawMovie>()
+                    .having((p0) => p0.title, "title", "title")
+                    .having((p0) => p0.overview, "overview", "overview")
+                    .having(
+                      (p0) => p0.releaseDate,
+                      "release_date",
+                      "releaseDate",
+                    )
+                    .having(
+                      (p0) => p0.posterPath,
+                      "poster_path",
+                      "posterPath",
+                    )
+                    .having((p0) => p0.genres, "genres", [1, 2]),
+              ]);
+            },
+          );
+        },
+      );
+      group(
+        "getMoviesTopRated",
+        () {
+          test(
+            "makes correct http request",
+            () async {
+              final response = MockResponse();
+              when(
+                () => response.statusCode,
+              ).thenReturn(200);
+              when(
+                () => response.body,
+              ).thenReturn("{}");
+              when(
+                () => httpClient.get(any()),
+              ).thenAnswer((invocation) async => response);
+              try {
+                await movieApi.getMoviesTopRated("tr");
+              } catch (_) {}
+              verify(
+                () => httpClient.get(
+                  Uri.https(
+                    baseUrl,
+                    "/3/movie/top_rated",
+                    {"api_key": Env.tmdbApiKey, "language": "tr", "page": "1"},
+                  ),
+                ),
+              ).called(1);
+            },
+          );
+          test(
+            "throws MovieRequestFailure on non-200 response",
+            () async {
+              final response = MockResponse();
+              when(
+                () => response.statusCode,
+              ).thenReturn(400);
+              when(
+                () => response.body,
+              ).thenReturn("{}");
+              when(
+                () => httpClient.get(any()),
+              ).thenAnswer((invocation) async => response);
+              await expectLater(
+                movieApi.getMoviesTopRated("tr"),
+                throwsA(isA<MovieRequestFailure>()),
+              );
+            },
+          );
+          test(
+            "throws MovieNotFound on empty response",
+            () async {
+              final response = MockResponse();
+              when(
+                () => response.statusCode,
+              ).thenReturn(200);
+              when(
+                () => response.body,
+              ).thenReturn("{}");
+              when(
+                () => httpClient.get(any()),
+              ).thenAnswer((invocation) async => response);
+              await expectLater(
+                movieApi.getMoviesTopRated("tr"),
+                throwsA(isA<MovieNotFound>()),
+              );
+            },
+          );
+          test(
+            "returns RawMovie on valid response",
+            () async {
+              final response = MockResponse();
+              when(
+                () => response.statusCode,
+              ).thenReturn(200);
+              when(
+                () => response.body,
+              ).thenReturn('''
+                {
+                  "results": [
+                  {
+                    "title": "title",
+                    "overview": "overview",
+                    "release_date": "releaseDate",
+                    "poster_path": "posterPath",
+                    "genres": [
+                      1,
+                      2
+                    ]
+                  }
+                ]
+                }
+                ''');
+              when(
+                () => httpClient.get(any()),
+              ).thenAnswer((invocation) async => response);
+              final actual = await movieApi.getMoviesTopRated("tr");
+              expect(actual, [
+                isA<RawMovie>()
+                    .having((p0) => p0.title, "title", "title")
+                    .having((p0) => p0.overview, "overview", "overview")
+                    .having(
+                      (p0) => p0.releaseDate,
+                      "release_date",
+                      "releaseDate",
+                    )
+                    .having(
+                      (p0) => p0.posterPath,
+                      "poster_path",
+                      "posterPath",
+                    )
+                    .having((p0) => p0.genres, "genres", [1, 2]),
+              ]);
+            },
+          );
+        },
+      );
+      group(
+        "getNowPlaying",
+        () {
+          test(
+            "makes correct http request",
+            () async {
+              final response = MockResponse();
+              when(
+                () => response.statusCode,
+              ).thenReturn(200);
+              when(
+                () => response.body,
+              ).thenReturn("{}");
+              when(
+                () => httpClient.get(any()),
+              ).thenAnswer((invocation) async => response);
+              try {
+                await movieApi.getMoviesNowPlaying("tr");
+              } catch (_) {}
+              verify(
+                () => httpClient.get(
+                  Uri.https(
+                    baseUrl,
+                    "/3/movie/now_playing",
+                    {"api_key": Env.tmdbApiKey, "language": "tr", "page": "1"},
+                  ),
+                ),
+              ).called(1);
+            },
+          );
+          test(
+            "throws MovieRequestFailure on non-200 response",
+            () async {
+              final response = MockResponse();
+              when(
+                () => response.statusCode,
+              ).thenReturn(400);
+              when(
+                () => response.body,
+              ).thenReturn("{}");
+              when(
+                () => httpClient.get(any()),
+              ).thenAnswer((invocation) async => response);
+              await expectLater(
+                movieApi.getMoviesNowPlaying("tr"),
+                throwsA(isA<MovieRequestFailure>()),
+              );
+            },
+          );
+          test(
+            "throws MovieNotFound on empty response",
+            () async {
+              final response = MockResponse();
+              when(
+                () => response.statusCode,
+              ).thenReturn(200);
+              when(
+                () => response.body,
+              ).thenReturn("{}");
+              when(
+                () => httpClient.get(any()),
+              ).thenAnswer((invocation) async => response);
+              await expectLater(
+                movieApi.getMoviesNowPlaying("tr"),
+                throwsA(isA<MovieNotFound>()),
+              );
+            },
+          );
+          test(
+            "returns RawMovie on valid response",
+            () async {
+              final response = MockResponse();
+              when(
+                () => response.statusCode,
+              ).thenReturn(200);
+              when(
+                () => response.body,
+              ).thenReturn('''
+                {
+                  "results": [
+                  {
+                    "title": "title",
+                    "overview": "overview",
+                    "release_date": "releaseDate",
+                    "poster_path": "posterPath",
+                    "genres": [
+                      1,
+                      2
+                    ]
+                  }
+                ]
+                }
+                ''');
+              when(
+                () => httpClient.get(any()),
+              ).thenAnswer((invocation) async => response);
+              final actual = await movieApi.getMoviesNowPlaying("tr");
               expect(actual, [
                 isA<RawMovie>()
                     .having((p0) => p0.title, "title", "title")

@@ -33,25 +33,97 @@ class MovieApi {
     return RawMovieDetails.fromJson(movieDetailsJson);
   }
 
-  Future<List<RawMovie>> getPopular(String languageCode) async {
-    final moviePopularRequest = Uri.https(
+  Future<List<RawMovie>> getMoviesPopular(
+    String languageCode, {
+    int pageNumber = 1,
+  }) async {
+    final moviesPopularRequest = Uri.https(
       _baseUrl,
       "$_moviePath/popular",
-      {"api_key": Env.tmdbApiKey, "language": languageCode},
+      {
+        "api_key": Env.tmdbApiKey,
+        "language": languageCode,
+        "page": "$pageNumber"
+      },
     );
 
-    final moviePopularResponse = await _httpClient.get(moviePopularRequest);
+    final moviesPopularResponse = await _httpClient.get(moviesPopularRequest);
 
-    if (moviePopularResponse.statusCode != HttpStatus.ok) {
+    if (moviesPopularResponse.statusCode != HttpStatus.ok) {
       throw MovieRequestFailure();
     }
 
-    final moviePopularJson =
-        jsonDecode(moviePopularResponse.body) as Map<String, dynamic>;
+    final moviesPopularJson =
+        jsonDecode(moviesPopularResponse.body) as Map<String, dynamic>;
 
-    if (!moviePopularJson.containsKey("results")) throw MovieNotFound();
+    if (!moviesPopularJson.containsKey("results")) throw MovieNotFound();
 
-    final results = moviePopularJson["results"] as List;
+    final results = moviesPopularJson["results"] as List;
+
+    return results
+        .map((e) => RawMovie.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<List<RawMovie>> getMoviesTopRated(
+    String languageCode, {
+    int pageNumber = 1,
+  }) async {
+    final moviesTopRatedRequest = Uri.https(
+      _baseUrl,
+      "$_moviePath/top_rated",
+      {
+        "api_key": Env.tmdbApiKey,
+        "language": languageCode,
+        "page": "$pageNumber"
+      },
+    );
+
+    final moviesTopRatedResponse = await _httpClient.get(moviesTopRatedRequest);
+
+    if (moviesTopRatedResponse.statusCode != HttpStatus.ok) {
+      throw MovieRequestFailure();
+    }
+
+    final moviesTopRatedJson =
+        jsonDecode(moviesTopRatedResponse.body) as Map<String, dynamic>;
+
+    if (!moviesTopRatedJson.containsKey("results")) throw MovieNotFound();
+
+    final results = moviesTopRatedJson["results"] as List;
+
+    return results
+        .map((e) => RawMovie.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<List<RawMovie>> getMoviesNowPlaying(
+    String languageCode, {
+    int pageNumber = 1,
+  }) async {
+    final moviesNowPlayingRequest = Uri.https(
+      _baseUrl,
+      "$_moviePath/now_playing",
+      {
+        "api_key": Env.tmdbApiKey,
+        "language": languageCode,
+        "page": "$pageNumber"
+      },
+    );
+
+    final moviesNowPlayingResponse =
+        await _httpClient.get(moviesNowPlayingRequest);
+
+    if (moviesNowPlayingResponse.statusCode != HttpStatus.ok) {
+      throw MovieRequestFailure();
+    }
+
+    final moviesNowPlayingJson =
+        jsonDecode(moviesNowPlayingResponse.body) as Map<String, dynamic>;
+
+    if (!moviesNowPlayingJson.containsKey("results")) throw MovieNotFound();
+
+    final results = moviesNowPlayingJson["results"] as List;
 
     return results
         .map((e) => RawMovie.fromJson(e as Map<String, dynamic>))
