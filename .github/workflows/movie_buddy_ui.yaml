@@ -1,0 +1,15 @@
+name: movie_buddy_ui
+
+on:
+  pull_request:
+    paths:
+      - "packages/movie_buddy_ui/**"
+      - ".github/workflows/movie_buddy_ui.yaml"
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      working_directory: packages/holobooth_ui
