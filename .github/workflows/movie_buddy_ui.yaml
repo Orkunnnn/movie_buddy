@@ -12,4 +12,4 @@ jobs:
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
-      working_directory: packages/holobooth_ui
+      working_directory: packages/movie_buddy_ui
