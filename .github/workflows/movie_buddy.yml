@@ -9,7 +9,7 @@ on:
       - main
 jobs:
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    uses: Orkunnnn/very_good_workflows/.github/workflows/main.yml@v1
     with:
       coverage_excludes: "**/*.g.dart"
   
