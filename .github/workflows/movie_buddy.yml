@@ -9,7 +9,7 @@ on:
       - main
 jobs:
   build:
-    uses: Orkunnnn/very_good_workflows/.github/workflows/main.yml@v1
+    uses: Orkunnnn/very_good_workflows/.github/workflows/main.yml@main
     with:
       coverage_excludes: "**/*.g.dart"
   
