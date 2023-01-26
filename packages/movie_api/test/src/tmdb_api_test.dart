@@ -1,6 +1,5 @@
 import "package:http/http.dart" as http;
 import 'package:mocktail/mocktail.dart';
-import 'package:movie_api/src/env/env.dart';
 import 'package:movie_api/src/errors/errors.dart';
 import 'package:movie_api/src/models/raw_genre.dart';
 import 'package:movie_api/src/models/raw_movie.dart';
@@ -21,11 +20,13 @@ void main() {
       const baseUrl = "api.themoviedb.org";
       late http.Client httpClient;
       late MovieApi movieApi;
+      late String key;
 
       setUp(
         () {
           httpClient = MockHttpClient();
           movieApi = MovieApi(httpClient: httpClient);
+          key = const String.fromEnvironment("TMDB_KEY");
         },
       );
       setUpAll(
@@ -57,7 +58,7 @@ void main() {
                   Uri.https(
                     "api.themoviedb.org",
                     "/3/movie/2",
-                    {"api_key": Env.tmdbApiKey, "language": "tr"},
+                    {"api_key": key, "language": "tr"},
                   ),
                 ),
               );
@@ -163,7 +164,7 @@ void main() {
                   Uri.https(
                     baseUrl,
                     "/3/movie/popular",
-                    {"api_key": Env.tmdbApiKey, "language": "tr", "page": "1"},
+                    {"api_key": key, "language": "tr", "page": "1"},
                   ),
                 ),
               ).called(1);
@@ -280,7 +281,7 @@ void main() {
                   Uri.https(
                     baseUrl,
                     "/3/movie/top_rated",
-                    {"api_key": Env.tmdbApiKey, "language": "tr", "page": "1"},
+                    {"api_key": key, "language": "tr", "page": "1"},
                   ),
                 ),
               ).called(1);
@@ -397,7 +398,7 @@ void main() {
                   Uri.https(
                     baseUrl,
                     "/3/movie/now_playing",
-                    {"api_key": Env.tmdbApiKey, "language": "tr", "page": "1"},
+                    {"api_key": key, "language": "tr", "page": "1"},
                   ),
                 ),
               ).called(1);

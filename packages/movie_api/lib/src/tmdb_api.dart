@@ -2,24 +2,26 @@ import 'dart:convert';
 import 'dart:io' if (dart.library.html) "dart:html";
 
 import "package:http/http.dart" as http;
-import 'package:movie_api/src/env/env.dart';
 import 'package:movie_api/src/errors/errors.dart';
 import 'package:movie_api/src/models/models.dart';
 
 class MovieApi {
   MovieApi({
     http.Client? httpClient,
-  }) : _httpClient = httpClient ?? http.Client();
+  }) : _httpClient = httpClient ?? http.Client() {
+    key = const String.fromEnvironment("TMDB_KEY");
+  }
 
   static const String _baseUrl = "api.themoviedb.org";
   static const String _moviePath = "/3/movie";
+  late String key;
   final http.Client _httpClient;
 
   Future<RawMovieDetails> getDetails(int movieId, String languageCode) async {
     final movieDetailsRequest = Uri.https(
       _baseUrl,
       "$_moviePath/$movieId",
-      {"api_key": Env.tmdbApiKey, "language": languageCode},
+      {"api_key": key, "language": languageCode},
     );
     final movieDetailsResponse = await _httpClient.get(movieDetailsRequest);
 
@@ -40,11 +42,7 @@ class MovieApi {
     final moviesPopularRequest = Uri.https(
       _baseUrl,
       "$_moviePath/popular",
-      {
-        "api_key": Env.tmdbApiKey,
-        "language": languageCode,
-        "page": "$pageNumber"
-      },
+      {"api_key": key, "language": languageCode, "page": "$pageNumber"},
     );
 
     final moviesPopularResponse = await _httpClient.get(moviesPopularRequest);
@@ -72,11 +70,7 @@ class MovieApi {
     final moviesTopRatedRequest = Uri.https(
       _baseUrl,
       "$_moviePath/top_rated",
-      {
-        "api_key": Env.tmdbApiKey,
-        "language": languageCode,
-        "page": "$pageNumber"
-      },
+      {"api_key": key, "language": languageCode, "page": "$pageNumber"},
     );
 
     final moviesTopRatedResponse = await _httpClient.get(moviesTopRatedRequest);
@@ -104,11 +98,7 @@ class MovieApi {
     final moviesNowPlayingRequest = Uri.https(
       _baseUrl,
       "$_moviePath/now_playing",
-      {
-        "api_key": Env.tmdbApiKey,
-        "language": languageCode,
-        "page": "$pageNumber"
-      },
+      {"api_key": key, "language": languageCode, "page": "$pageNumber"},
     );
 
     final moviesNowPlayingResponse =
