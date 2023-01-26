@@ -11,6 +11,5 @@ jobs:
   build:
     uses: Orkunnnn/very_good_workflows/.github/workflows/main.yml@main
     with:
-      token: ${{ secrets.CODECOV_TOKEN }}
       coverage_excludes: "**/*.g.dart"
   
