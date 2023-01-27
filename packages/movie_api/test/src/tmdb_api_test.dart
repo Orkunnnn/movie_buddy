@@ -157,7 +157,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               try {
-                await movieApi.getMoviesPopular("tr");
+                await movieApi.getMoviesPopular("tr", 1);
               } catch (_) {}
               verify(
                 () => httpClient.get(
@@ -184,7 +184,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               await expectLater(
-                movieApi.getMoviesPopular("tr"),
+                movieApi.getMoviesPopular("tr", 1),
                 throwsA(isA<MovieRequestFailure>()),
               );
             },
@@ -203,7 +203,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               await expectLater(
-                movieApi.getMoviesPopular("tr"),
+                movieApi.getMoviesPopular("tr", 1),
                 throwsA(isA<MovieNotFound>()),
               );
             },
@@ -236,7 +236,7 @@ void main() {
               when(
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
-              final actual = await movieApi.getMoviesPopular("tr");
+              final actual = await movieApi.getMoviesPopular("tr", 1);
               expect(actual, [
                 isA<RawMovie>()
                     .having((p0) => p0.title, "title", "title")
@@ -274,7 +274,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               try {
-                await movieApi.getMoviesTopRated("tr");
+                await movieApi.getMoviesTopRated("tr", 1);
               } catch (_) {}
               verify(
                 () => httpClient.get(
@@ -301,7 +301,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               await expectLater(
-                movieApi.getMoviesTopRated("tr"),
+                movieApi.getMoviesTopRated("tr", 1),
                 throwsA(isA<MovieRequestFailure>()),
               );
             },
@@ -320,7 +320,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               await expectLater(
-                movieApi.getMoviesTopRated("tr"),
+                movieApi.getMoviesTopRated("tr", 1),
                 throwsA(isA<MovieNotFound>()),
               );
             },
@@ -353,7 +353,7 @@ void main() {
               when(
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
-              final actual = await movieApi.getMoviesTopRated("tr");
+              final actual = await movieApi.getMoviesTopRated("tr", 1);
               expect(actual, [
                 isA<RawMovie>()
                     .having((p0) => p0.title, "title", "title")
@@ -391,7 +391,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               try {
-                await movieApi.getMoviesNowPlaying("tr");
+                await movieApi.getMoviesNowPlaying("tr", 1);
               } catch (_) {}
               verify(
                 () => httpClient.get(
@@ -418,7 +418,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               await expectLater(
-                movieApi.getMoviesNowPlaying("tr"),
+                movieApi.getMoviesNowPlaying("tr", 1),
                 throwsA(isA<MovieRequestFailure>()),
               );
             },
@@ -437,7 +437,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               await expectLater(
-                movieApi.getMoviesNowPlaying("tr"),
+                movieApi.getMoviesNowPlaying("tr", 1),
                 throwsA(isA<MovieNotFound>()),
               );
             },
@@ -470,7 +470,7 @@ void main() {
               when(
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
-              final actual = await movieApi.getMoviesNowPlaying("tr");
+              final actual = await movieApi.getMoviesNowPlaying("tr", 1);
               expect(actual, [
                 isA<RawMovie>()
                     .having((p0) => p0.title, "title", "title")

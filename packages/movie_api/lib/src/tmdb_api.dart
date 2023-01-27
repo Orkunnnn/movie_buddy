@@ -36,9 +36,9 @@ class MovieApi {
   }
 
   Future<List<RawMovie>> getMoviesPopular(
-    String languageCode, {
-    int pageNumber = 1,
-  }) async {
+    String languageCode,
+    int pageNumber,
+  ) async {
     final moviesPopularRequest = Uri.https(
       _baseUrl,
       "$_moviePath/popular",
@@ -64,9 +64,9 @@ class MovieApi {
   }
 
   Future<List<RawMovie>> getMoviesTopRated(
-    String languageCode, {
-    int pageNumber = 1,
-  }) async {
+    String languageCode,
+    int pageNumber,
+  ) async {
     final moviesTopRatedRequest = Uri.https(
       _baseUrl,
       "$_moviePath/top_rated",
@@ -92,9 +92,9 @@ class MovieApi {
   }
 
   Future<List<RawMovie>> getMoviesNowPlaying(
-    String languageCode, {
-    int pageNumber = 1,
-  }) async {
+    String languageCode,
+    int pageNumber,
+  ) async {
     final moviesNowPlayingRequest = Uri.https(
       _baseUrl,
       "$_moviePath/now_playing",
