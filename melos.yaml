@@ -10,6 +10,6 @@ scripts:
     run: >
       coverde rm MELOS_ROOT_PATH/coverage/filtered.lcov.info &&
       melos exec --flutter flutter test --coverage --test-randomize-ordering-seed random &&
-      melos exec --no-flutter dart test --coverage --test-randomize-ordering-seed random &&
+      melos exec --no-flutter dart test --coverage=./coverage --test-randomize-ordering-seed=random &&
       melos exec --file-exists=coverage/lcov.info -- coverde filter --input ./coverage/lcov.info --output MELOS_ROOT_PATH/coverage/filtered.lcov.info --filters \.g\.dart &&
       coverde value -i  coverage/filtered.lcov.info --no-verbose
