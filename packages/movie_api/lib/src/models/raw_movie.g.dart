@@ -15,14 +15,15 @@ RawMovie _$RawMovieFromJson(Map<String, dynamic> json) => $checkedCreate(
           $checkedConvert('overview', (v) => v as String),
           $checkedConvert('release_date', (v) => v as String),
           $checkedConvert('poster_path', (v) => v as String),
-          $checkedConvert('genres',
+          $checkedConvert('genre_ids',
               (v) => (v as List<dynamic>).map((e) => e as int).toList()),
         );
         return val;
       },
       fieldKeyMap: const {
         'releaseDate': 'release_date',
-        'posterPath': 'poster_path'
+        'posterPath': 'poster_path',
+        'genres': 'genre_ids'
       },
     );
 
@@ -31,5 +32,5 @@ Map<String, dynamic> _$RawMovieToJson(RawMovie instance) => <String, dynamic>{
       'overview': instance.overview,
       'release_date': instance.releaseDate,
       'poster_path': instance.posterPath,
-      'genres': instance.genres,
+      'genre_ids': instance.genres,
     };

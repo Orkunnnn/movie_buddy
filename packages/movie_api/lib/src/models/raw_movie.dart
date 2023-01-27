@@ -19,6 +19,7 @@ class RawMovie {
   final String overview;
   final String releaseDate;
   final String posterPath;
+  @JsonKey(name: "genre_ids")
   final List<int> genres;
 
   Map<String, dynamic> toJson() => _$RawMovieToJson(this);

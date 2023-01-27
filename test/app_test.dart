@@ -48,7 +48,7 @@ void main() {
               child: const MaterialApp(
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,
-                home: HomePage(),
+                home: HomeView(),
               ),
             ),
           );
@@ -77,7 +77,7 @@ void main() {
                     localizationsDelegates:
                         AppLocalizations.localizationsDelegates,
                     supportedLocales: AppLocalizations.supportedLocales,
-                    home: HomePage(),
+                    home: HomeView(),
                   ),
                 ),
               );

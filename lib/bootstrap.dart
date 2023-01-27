@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:movie_buddy/app/app.dart';
 import 'package:movie_buddy/app/app_bloc_observer.dart';
+import 'package:movie_repository/movie_repository.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> bootstrap() async {
@@ -21,8 +22,13 @@ Future<void> bootstrap() async {
         ? HydratedStorage.webStorageDirectory
         : await getTemporaryDirectory(),
   );
+  final movieRepository = MovieRepository();
   runZonedGuarded(
-    () => runApp(const App()),
+    () => runApp(
+      App(
+        movieRepository: movieRepository,
+      ),
+    ),
     (error, stack) {
       print(error);
       print(stack);
