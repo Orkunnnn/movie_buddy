@@ -16,7 +16,7 @@ void main() {
         },
       );
       test(
-        "converts RawGenre to Genre",
+        "returns Genre from RawGenre",
         () {
           final rawGenre = RawGenre(id: 1, name: "Comedy");
           expect(
