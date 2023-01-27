@@ -1,0 +1,15 @@
+name: movie_repository
+
+on:
+  pull_request:
+    paths:
+      - "packages/movie_repository/**"
+      - ".github/workflows/movie_repository.yml"
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
+    with:
+      working_directory: packages/movie_repository
