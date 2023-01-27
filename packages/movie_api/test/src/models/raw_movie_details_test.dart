@@ -29,7 +29,7 @@ void main() {
                   "tagline": "tagline",
                   "release_date": "releaseDate",
                   "poster_path": "posterPath",
-                  "genres": <Genre>[]
+                  "genres": <RawGenre>[]
                 },
               );
             },
@@ -50,7 +50,7 @@ void main() {
                   "tagline": "tagline",
                   "release_date": "releaseDate",
                   "poster_path": "posterPath",
-                  "genres": <Genre>[]
+                  "genres": <RawGenre>[]
                 }).toJson(),
                 {
                   "title": "title",
@@ -59,7 +59,7 @@ void main() {
                   "tagline": "tagline",
                   "release_date": "releaseDate",
                   "poster_path": "posterPath",
-                  "genres": <Genre>[]
+                  "genres": <RawGenre>[]
                 },
               );
             },

@@ -130,7 +130,7 @@ void main() {
                   (p0) => p0.genres,
                   "genres",
                   [
-                    isA<Genre>()
+                    isA<RawGenre>()
                         .having((p0) => p0.id, "id", 1)
                         .having((p0) => p0.name, "name", "Comedy")
                   ],

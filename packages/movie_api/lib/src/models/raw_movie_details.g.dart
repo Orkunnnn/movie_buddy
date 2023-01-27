@@ -21,7 +21,7 @@ RawMovieDetails _$RawMovieDetailsFromJson(Map<String, dynamic> json) =>
           $checkedConvert(
               'genres',
               (v) => (v as List<dynamic>)
-                  .map((e) => Genre.fromJson(e as Map<String, dynamic>))
+                  .map((e) => RawGenre.fromJson(e as Map<String, dynamic>))
                   .toList()),
         );
         return val;

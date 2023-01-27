@@ -24,7 +24,7 @@ class RawMovieDetails {
   final String tagline;
   final String releaseDate;
   final String? posterPath;
-  final List<Genre> genres;
+  final List<RawGenre> genres;
 
   Map<String, dynamic> toJson() => _$RawMovieDetailsToJson(this);
 }
