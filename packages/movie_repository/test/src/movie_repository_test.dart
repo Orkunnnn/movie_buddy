@@ -1,7 +1,6 @@
 import 'package:mocktail/mocktail.dart';
 import 'package:movie_api/movie_api.dart';
-import 'package:movie_repository/src/models/movie.dart';
-import 'package:movie_repository/src/models/movie_details.dart';
+import 'package:movie_repository/src/models/models.dart';
 import 'package:movie_repository/src/movie_repository.dart';
 import 'package:test/test.dart';
 
