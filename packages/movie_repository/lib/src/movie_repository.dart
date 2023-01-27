@@ -8,7 +8,7 @@ class MovieRepository {
   final MovieApi _movieApi;
 
   Future<MovieDetails> getMovieDetails(int movieId, String languageCode) async {
-    final movieDetails = await _movieApi.getDetails(movieId, languageCode);
+    final movieDetails = await _movieApi.getMovieDetails(movieId, languageCode);
     return MovieDetails.fromRawMovieDetails(movieDetails);
   }
 
