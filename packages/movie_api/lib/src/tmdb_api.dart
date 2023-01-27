@@ -17,7 +17,8 @@ class MovieApi {
   late String key;
   final http.Client _httpClient;
 
-  Future<RawMovieDetails> getDetails(int movieId, String languageCode) async {
+  Future<RawMovieDetails> getMovieDetails(
+      int movieId, String languageCode) async {
     final movieDetailsRequest = Uri.https(
       _baseUrl,
       "$_moviePath/$movieId",

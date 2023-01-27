@@ -51,7 +51,7 @@ void main() {
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
               try {
-                await movieApi.getDetails(2, "tr");
+                await movieApi.getMovieDetails(2, "tr");
               } catch (_) {}
               verify(
                 () => httpClient.get(
@@ -72,7 +72,7 @@ void main() {
               when(() => httpClient.get(any()))
                   .thenAnswer((_) async => response);
               await expectLater(
-                movieApi.getDetails(2, "tr"),
+                movieApi.getMovieDetails(2, "tr"),
                 throwsA(isA<MovieRequestFailure>()),
               );
             },
@@ -104,7 +104,7 @@ void main() {
               when(
                 () => httpClient.get(any()),
               ).thenAnswer((invocation) async => response);
-              final actual = await movieApi.getDetails(2, "tr");
+              final actual = await movieApi.getMovieDetails(2, "tr");
               expect(
                 actual,
                 isA<RawMovieDetails>()
