@@ -1,23 +1,18 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
 import 'package:movie_buddy/l10n/l10n.dart';
 import 'package:movie_buddy/movie/cubit/movie_cubit.dart';
-import 'package:movie_buddy/settings/views/settings_page.dart';
-import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
 import 'package:movie_buddy_ui/movie_buddy_ui.dart';
-import 'package:movie_repository/movie_repository.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MovieCubit(context.read<MovieRepository>()),
-      child: const HomeView(),
-    );
+    return const HomeView();
   }
 }
 
@@ -62,12 +57,7 @@ class _HomeViewState extends State<HomeView> {
             children: [
               Text(l10n.helloWorld),
               ElevatedButton(
-                onPressed: () => Navigator.of(context).push(
-                  SettingsPage.route(
-                    localizationCubit: context.read<LocalizationCubit>(),
-                    themeCubit: context.read<ThemeCubit>(),
-                  ),
-                ),
+                onPressed: () => context.beamToNamed("/settings"),
                 child: const Text("Go to settings"),
               ),
               BlocBuilder<MovieCubit, MovieState>(
@@ -84,7 +74,7 @@ class _HomeViewState extends State<HomeView> {
                         itemBuilder: (context, index) {
                           final movie = state.movies[index];
                           return ListTile(
-                            title: Image.network(movie.posterPathFull),
+                            title: Text(movie.title),
                           );
                         },
                       ),
@@ -95,6 +85,15 @@ class _HomeViewState extends State<HomeView> {
               )
             ],
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(label: "Home", icon: Icon(Ionicons.home)),
+            BottomNavigationBarItem(
+              label: "Settings",
+              icon: Icon(Ionicons.settings),
+            )
+          ],
         ),
       ),
     );

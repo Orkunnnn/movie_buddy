@@ -12,6 +12,10 @@ class MoviesInitial extends MovieState {}
 
 class MoviesLoading extends MovieState {}
 
+class MoviesLanguageChanged extends MovieState {
+  const MoviesLanguageChanged();
+}
+
 class MoviesLoaded extends MovieState {
   const MoviesLoaded({required this.movies, this.pageNumber = 1});
 

@@ -12,12 +12,12 @@ class Movie extends Equatable {
   });
 
   factory Movie.fromRawMovie(RawMovie movie) {
-    final posterPathFull =
+    final posterPathFull = movie.posterPath ??
         "https://image.tmdb.org/t/p/original/${movie.posterPath}";
     return Movie(
       title: movie.title,
       overview: movie.overview,
-      releaseDate: movie.releaseDate,
+      releaseDate: movie.releaseDate ?? "unknown",
       posterPathFull: posterPathFull,
       genres: movie.genres.map((genreId) => genreId.genre).toList(),
     );

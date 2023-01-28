@@ -1,8 +1,10 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_buddy/home/views/home_page.dart';
 import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
 import 'package:movie_buddy/l10n/l10n.dart';
+import 'package:movie_buddy/movie/cubit/movie_cubit.dart';
+import 'package:movie_buddy/navigation/beam_locations.dart';
 import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
 import 'package:movie_buddy_ui/movie_buddy_ui.dart';
 import 'package:movie_repository/movie_repository.dart';
@@ -19,28 +21,46 @@ class App extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => LocalizationCubit(),
+            create: (_) => LocalizationCubit(),
           ),
           BlocProvider(
-            create: (context) => ThemeCubit(),
+            create: (_) => ThemeCubit(),
+          ),
+          BlocProvider(
+            create: (_) => MovieCubit(movieRepository),
           )
         ],
-        child: const _AppView(),
+        child: _AppView(),
       ),
     );
   }
 }
 
 class _AppView extends StatelessWidget {
-  const _AppView();
+  _AppView();
+
+  final routerDelegate = BeamerDelegate(
+    initialPath: "/movies",
+    transitionDelegate: const NoAnimationTransitionDelegate(),
+    locationBuilder: BeamerLocationBuilder(beamLocations: [
+      MoviesLocation(),
+      MovieDetailsLocation(),
+      SettingsLocation()
+    ]),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LocalizationCubit, Locale?>(
+    return BlocConsumer<LocalizationCubit, Locale?>(
+      listener: (context, state) => context
+          .read<MovieCubit>()
+          .fetchMoviesLanguageChanged(state?.languageCode ?? "tr"),
       builder: (context, locale) {
         return BlocBuilder<ThemeCubit, ThemeMode>(
           builder: (context, themeMode) {
-            return MaterialApp(
+            return MaterialApp.router(
+              routeInformationParser: BeamerParser(),
+              routerDelegate: routerDelegate,
               title: "Movie Buddy",
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
@@ -48,7 +68,6 @@ class _AppView extends StatelessWidget {
               darkTheme: MovieBuddyTheme.dark,
               themeMode: themeMode,
               locale: locale,
-              home: const HomePage(),
             );
           },
         );

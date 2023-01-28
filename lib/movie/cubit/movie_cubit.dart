@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_repository/movie_repository.dart';
 
 part 'movie_state.dart';
@@ -33,5 +33,11 @@ class MovieCubit extends Cubit<MovieState> {
     } on Exception {
       emit(MoviesFailed());
     }
+  }
+
+  Future<void> fetchMoviesLanguageChanged(String languageCode) async {
+    emit(const MoviesLanguageChanged());
+    final moviesPopular = await movieRepository.getMoviesPopular(languageCode);
+    emit(MoviesLoaded(movies: moviesPopular));
   }
 }
