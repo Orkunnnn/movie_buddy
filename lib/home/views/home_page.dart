@@ -62,23 +62,33 @@ class _HomeViewState extends State<HomeView> {
               ),
               BlocBuilder<MovieCubit, MovieState>(
                 builder: (context, state) {
-                  if (state is MoviesLoading) {
-                    return const CircularProgressIndicator();
-                  }
-                  if (state is MoviesLoaded) {
-                    print(state.movies.length);
-                    return Expanded(
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: state.movies.length,
-                        itemBuilder: (context, index) {
-                          final movie = state.movies[index];
-                          return ListTile(
-                            title: Text(movie.title),
-                          );
-                        },
-                      ),
-                    );
+                  switch (state.status) {
+                    case MovieStatus.loading:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case MovieStatus.success:
+                      return Expanded(
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          itemCount: state.hasReachedMax
+                              ? state.movies.length
+                              : state.movies.length + 1,
+                          itemBuilder: (context, index) {
+                            return index >= state.movies.length
+                                ? const BottomLoader()
+                                : ListTile(
+                                    title: Text(state.movies[index].title),
+                                  );
+                          },
+                        ),
+                      );
+                    case MovieStatus.failure:
+                      return const Center(
+                        child: Text("Error"),
+                      );
+                    case MovieStatus.initial:
+                      const SizedBox.shrink();
                   }
                   return const SizedBox.shrink();
                 },
@@ -108,10 +118,12 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void _onScroll() {
-    if (_isBottom) {
-      context.read<MovieCubit>().fetchMoviesPopular(
-            context.read<LocalizationCubit>().state?.languageCode ?? "tr",
-          );
+    final movieCubit = context.read<MovieCubit>();
+    if (_isBottom && !movieCubit.state.isFetching) {
+      print("called is bottom");
+      movieCubit.fetchMoviesPopular(
+        context.read<LocalizationCubit>().state?.languageCode ?? "tr",
+      );
     }
   }
 

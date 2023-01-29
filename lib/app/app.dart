@@ -42,19 +42,18 @@ class _AppView extends StatelessWidget {
   final routerDelegate = BeamerDelegate(
     initialPath: "/movies",
     transitionDelegate: const NoAnimationTransitionDelegate(),
-    locationBuilder: BeamerLocationBuilder(beamLocations: [
-      MoviesLocation(),
-      MovieDetailsLocation(),
-      SettingsLocation()
-    ]),
+    locationBuilder: BeamerLocationBuilder(
+      beamLocations: [
+        MoviesLocation(),
+        MovieDetailsLocation(),
+        SettingsLocation()
+      ],
+    ),
   );
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LocalizationCubit, Locale?>(
-      listener: (context, state) => context
-          .read<MovieCubit>()
-          .fetchMoviesLanguageChanged(state?.languageCode ?? "tr"),
+    return BlocBuilder<LocalizationCubit, Locale?>(
       builder: (context, locale) {
         return BlocBuilder<ThemeCubit, ThemeMode>(
           builder: (context, themeMode) {

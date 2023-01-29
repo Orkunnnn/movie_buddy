@@ -12,12 +12,14 @@ class Movie extends Equatable {
   });
 
   factory Movie.fromRawMovie(RawMovie movie) {
-    final posterPathFull = movie.posterPath ??
-        "https://image.tmdb.org/t/p/original/${movie.posterPath}";
+    final posterPathFull = movie.posterPath != null
+        ? "https://image.tmdb.org/t/p/original/${movie.posterPath}"
+        : movie.posterPath;
+
     return Movie(
       title: movie.title,
       overview: movie.overview,
-      releaseDate: movie.releaseDate ?? "unknown",
+      releaseDate: movie.releaseDate,
       posterPathFull: posterPathFull,
       genres: movie.genres.map((genreId) => genreId.genre).toList(),
     );
@@ -25,8 +27,8 @@ class Movie extends Equatable {
 
   final String title;
   final String overview;
-  final String releaseDate;
-  final String posterPathFull;
+  final String? releaseDate;
+  final String? posterPathFull;
   final List<Genre> genres;
 
   @override
