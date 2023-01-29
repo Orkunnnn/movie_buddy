@@ -10,7 +10,7 @@ import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
 
 import 'helpers/hydrated_bloc.dart';
 
-class MockLocalizationCubit extends MockCubit<Locale?>
+class MockLocalizationCubit extends MockCubit<Locale>
     implements LocalizationCubit {}
 
 class MockThemeCubit extends MockCubit<ThemeMode> implements ThemeCubit {}

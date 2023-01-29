@@ -29,7 +29,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     context.read<MovieCubit>().fetchMoviesPopular(
-          context.read<LocalizationCubit>().state?.languageCode ?? "",
+          context.read<LocalizationCubit>().state.languageCode,
         );
     _scrollController.addListener(_onScroll);
   }
@@ -122,13 +122,14 @@ class _HomeViewState extends State<HomeView> {
     if (_isBottom && !movieCubit.state.isFetching) {
       print("called is bottom");
       movieCubit.fetchMoviesPopular(
-        context.read<LocalizationCubit>().state?.languageCode ?? "tr",
+        context.read<LocalizationCubit>().state.languageCode,
       );
     }
   }
 
   bool get _isBottom {
     if (!_scrollController.hasClients) return false;
+    if (context.read<MovieCubit>().state.hasReachedMax) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
     return currentScroll >= (maxScroll * 0.9);

@@ -1,6 +1,6 @@
-part of 'movie_bloc.dart';
+part of 'movie_cubit.dart';
 
-enum MovieStatus { initial, loading, success, failure }
+enum MovieStatus { initial, success, failure, loading }
 
 class MovieState extends Equatable {
   const MovieState({

@@ -27,7 +27,7 @@ class App extends StatelessWidget {
             create: (_) => ThemeCubit(),
           ),
           BlocProvider(
-            create: (_) => MovieCubit(movieRepository),
+            create: (_) => MovieCubit(movieRepository: movieRepository),
           )
         ],
         child: _AppView(),
