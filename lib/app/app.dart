@@ -1,10 +1,9 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
 import 'package:movie_buddy/l10n/l10n.dart';
-import 'package:movie_buddy/movie/cubit/movie_cubit.dart';
-import 'package:movie_buddy/navigation/beam_locations.dart';
+import 'package:movie_buddy/navigation/cubit/navigation_cubit.dart';
+import 'package:movie_buddy/navigation/router.dart';
 import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
 import 'package:movie_buddy_ui/movie_buddy_ui.dart';
 import 'package:movie_repository/movie_repository.dart';
@@ -27,29 +26,17 @@ class App extends StatelessWidget {
             create: (_) => ThemeCubit(),
           ),
           BlocProvider(
-            create: (_) => MovieCubit(movieRepository: movieRepository),
-          )
+            create: (_) => NavigationCubit(),
+          ),
         ],
-        child: _AppView(),
+        child: const _AppView(),
       ),
     );
   }
 }
 
 class _AppView extends StatelessWidget {
-  _AppView();
-
-  final routerDelegate = BeamerDelegate(
-    initialPath: "/movies",
-    transitionDelegate: const NoAnimationTransitionDelegate(),
-    locationBuilder: BeamerLocationBuilder(
-      beamLocations: [
-        MoviesLocation(),
-        MovieDetailsLocation(),
-        SettingsLocation()
-      ],
-    ),
-  );
+  const _AppView();
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +45,7 @@ class _AppView extends StatelessWidget {
         return BlocBuilder<ThemeCubit, ThemeMode>(
           builder: (context, themeMode) {
             return MaterialApp.router(
-              routeInformationParser: BeamerParser(),
-              routerDelegate: routerDelegate,
+              routerConfig: RouteConfig.router,
               title: "Movie Buddy",
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,

@@ -36,13 +36,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.9.0"
-  beamer:
-    dependency: "direct main"
-    description:
-      name: beamer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.5.3"
   bloc:
     dependency: transitive
     description:
@@ -207,6 +200,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_nested_navigation:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: a4386a779ceec88f8ee3714d6aa7e9742d20fa53
+      url: "https://github.com/g-30/flutter_nested_navigation.git"
+    source: git
+    version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -231,6 +233,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  go_router:
+    dependency: transitive
+    description:
+      path: "packages/go_router"
+      ref: nested-persistent-navigation
+      resolved-ref: f9a26084d264b0a0b98211f168455232e96698b9
+      url: "https://github.com/g-30/flutter_packages.git"
+    source: git
+    version: "6.1.0"
   graphs:
     dependency: transitive
     description:
@@ -756,4 +767,4 @@ packages:
     version: "2.0.3"
 sdks:
   dart: ">=2.18.6 <3.0.0"
-  flutter: ">=3.0.0"
+  flutter: ">=3.3.0"

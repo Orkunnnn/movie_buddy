@@ -13,7 +13,7 @@ class MovieCubit extends Cubit<MovieState> {
     if (state.hasReachedMax) return;
     try {
       if (state.status == MovieStatus.initial) {
-        emit(state.copyWith(isFetching: true));
+        emit(state.copyWith(isFetching: true, status: MovieStatus.loading));
         final movies = await movieRepository.getMoviesPopular(languageCode);
         emit(
           state.copyWith(

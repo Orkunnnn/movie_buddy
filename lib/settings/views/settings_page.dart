@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
 import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
 import 'package:movie_buddy_ui/movie_buddy_ui.dart';
@@ -75,7 +76,7 @@ class SettingsPage extends StatelessWidget {
           Padding(
             padding: MovieBuddyPadding.horizontal.medium,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => context.pop(),
               child: const Text("Watch Now"),
             ),
           )

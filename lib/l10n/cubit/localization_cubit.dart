@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-class LocalizationCubit extends HydratedCubit<Locale> {
-  LocalizationCubit() : super(Locale(Platform.localeName));
+class LocalizationCubit extends HydratedCubit<Locale?> {
+  LocalizationCubit() : super(null);
 
   void setLocale(Locale locale) {
     emit(locale);
