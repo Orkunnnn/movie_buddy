@@ -15,7 +15,7 @@ class MovieCubit extends Cubit<MovieState> {
       if (state.status == MovieStatus.initial) {
         emit(state.copyWith(isFetching: true, status: MovieStatus.loading));
         final movies = await movieRepository.getMoviesPopular(languageCode);
-        emit(
+        return emit(
           state.copyWith(
             movies: movies,
             isFetching: false,

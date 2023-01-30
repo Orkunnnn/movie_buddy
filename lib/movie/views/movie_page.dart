@@ -10,8 +10,11 @@ class MoviePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          MovieCubit(movieRepository: context.read<MovieRepository>()),
+      create: (_) => MovieCubit(
+        movieRepository: context.read<MovieRepository>(),
+      )..fetchMoviesPopular(
+          context.read<LocalizationCubit>().state?.languageCode ?? "tr",
+        ),
       child: const MovieView(),
     );
   }
@@ -30,6 +33,7 @@ class _MovieViewState extends State<MovieView> {
   @override
   void initState() {
     super.initState();
+    print(context.read<MovieCubit>().state);
     _scrollController.addListener(_onScroll);
   }
 
@@ -47,11 +51,7 @@ class _MovieViewState extends State<MovieView> {
           builder: (context, state) {
             switch (state.status) {
               case MovieStatus.loading:
-                return const SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator(),
-                );
+                return const SizedBox.shrink();
               case MovieStatus.success:
                 return Expanded(
                   child: ListView.builder(
@@ -59,8 +59,19 @@ class _MovieViewState extends State<MovieView> {
                     controller: _scrollController,
                     itemCount: state.movies.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(state.movies[index].title),
+                      return Column(
+                        children: [
+                          ListTile(
+                            title: Text(state.movies[index].title),
+                          ),
+                          if (index != 0 && index % 20 == 0)
+                            const Divider(
+                              thickness: 1,
+                              color: Colors.red,
+                            )
+                          else
+                            const SizedBox.shrink()
+                        ],
                       );
                     },
                   ),
@@ -89,6 +100,7 @@ class _MovieViewState extends State<MovieView> {
 
   void _onScroll() {
     final movieCubit = context.read<MovieCubit>();
+    if (movieCubit.state.movies.isEmpty) return;
     if (_isBottom && !movieCubit.state.isFetching) {
       movieCubit.fetchMoviesPopular(
         context.read<LocalizationCubit>().state?.languageCode ?? "tr",
