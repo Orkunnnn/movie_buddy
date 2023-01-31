@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
 import 'package:movie_buddy/l10n/l10n.dart';
+import 'package:movie_buddy/movie/bloc/movie_bloc.dart';
 import 'package:movie_buddy/navigation/cubit/navigation_cubit.dart';
 import 'package:movie_buddy/navigation/router.dart';
 import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
@@ -9,9 +10,10 @@ import 'package:movie_buddy_ui/movie_buddy_ui.dart';
 import 'package:movie_repository/movie_repository.dart';
 
 class App extends StatelessWidget {
-  const App({super.key, required this.movieRepository});
+  App({super.key, required this.movieRepository});
 
   final MovieRepository movieRepository;
+  final localizationCubit = LocalizationCubit();
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +21,8 @@ class App extends StatelessWidget {
       value: movieRepository,
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (_) => LocalizationCubit(),
+          BlocProvider.value(
+            value: localizationCubit,
           ),
           BlocProvider(
             create: (_) => ThemeCubit(),
@@ -28,6 +30,12 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (_) => NavigationCubit(),
           ),
+          BlocProvider(
+            create: (_) => MovieBloc(
+              movieRepository: movieRepository,
+              localizationCubit: localizationCubit,
+            )..add(MoviesFetched()),
+          )
         ],
         child: const _AppView(),
       ),
@@ -40,7 +48,9 @@ class _AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LocalizationCubit, Locale?>(
+    return BlocConsumer<LocalizationCubit, Locale?>(
+      listener: (context, state) =>
+          context.read<MovieBloc>()..add(MoviesLanguageChanged()),
       builder: (context, locale) {
         return BlocBuilder<ThemeCubit, ThemeMode>(
           builder: (context, themeMode) {

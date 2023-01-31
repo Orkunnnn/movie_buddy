@@ -1,6 +1,6 @@
-part of 'movie_cubit.dart';
+part of 'movie_bloc.dart';
 
-enum MovieStatus { initial, success, failure, loading }
+enum MovieStatus { initial, success, failure }
 
 class MovieState extends Equatable {
   const MovieState({
@@ -8,31 +8,31 @@ class MovieState extends Equatable {
     this.pageNumber = 1,
     this.movies = const [],
     this.hasReachedMax = false,
-    this.isFetching = false,
+    this.key = const PageStorageKey(0),
   });
 
   final MovieStatus status;
-  final int pageNumber;
   final List<Movie> movies;
+  final int pageNumber;
   final bool hasReachedMax;
-  final bool isFetching;
+  final PageStorageKey<int> key;
 
   @override
-  List<Object> get props => [status, movies, hasReachedMax, isFetching];
+  List<Object> get props => [status, movies, hasReachedMax, pageNumber];
 
   MovieState copyWith({
     MovieStatus? status,
-    int? pageNumber,
     List<Movie>? movies,
+    int? pageNumber,
     bool? hasReachedMax,
-    bool? isFetching,
+    PageStorageKey<int>? key,
   }) {
     return MovieState(
       status: status ?? this.status,
-      pageNumber: pageNumber ?? this.pageNumber,
       movies: movies ?? this.movies,
+      pageNumber: pageNumber ?? this.pageNumber,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
-      isFetching: isFetching ?? this.isFetching,
+      key: key ?? this.key,
     );
   }
 }

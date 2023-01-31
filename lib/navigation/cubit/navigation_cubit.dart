@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_nested_navigation/flutter_nested_navigation.dart';
 import 'package:movie_buddy/navigation/routes.dart';
 
 class NavigationCubit extends Cubit<int> {
@@ -10,7 +10,7 @@ class NavigationCubit extends Cubit<int> {
     emit(routes.index);
     switch (routes) {
       case Routes.movies:
-        context.go("/");
+        context.go("/movies");
         break;
       case Routes.settings:
         context.go("/settings");

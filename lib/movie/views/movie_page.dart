@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
-import 'package:movie_buddy/movie/cubit/movie_cubit.dart';
-import 'package:movie_repository/movie_repository.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movie_buddy/movie/bloc/movie_bloc.dart';
 
 class MoviePage extends StatelessWidget {
   const MoviePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => MovieCubit(
-        movieRepository: context.read<MovieRepository>(),
-      )..fetchMoviesPopular(
-          context.read<LocalizationCubit>().state?.languageCode ?? "tr",
-        ),
-      child: const MovieView(),
-    );
+    return const MovieView();
   }
 }
 
@@ -33,7 +25,6 @@ class _MovieViewState extends State<MovieView> {
   @override
   void initState() {
     super.initState();
-    print(context.read<MovieCubit>().state);
     _scrollController.addListener(_onScroll);
   }
 
@@ -41,27 +32,20 @@ class _MovieViewState extends State<MovieView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ElevatedButton(
-          onPressed: () => context.read<MovieCubit>().fetchMoviesPopular(
-                context.read<LocalizationCubit>().state?.languageCode ?? "tr",
-              ),
-          child: const Text("Go to settings"),
-        ),
-        BlocBuilder<MovieCubit, MovieState>(
+        BlocBuilder<MovieBloc, MovieState>(
           builder: (context, state) {
             switch (state.status) {
-              case MovieStatus.loading:
-                return const SizedBox.shrink();
               case MovieStatus.success:
                 return Expanded(
                   child: ListView.builder(
-                    key: const PageStorageKey("movies"),
+                    key: state.key,
                     controller: _scrollController,
                     itemCount: state.movies.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
                           ListTile(
+                            onTap: () => context.go("/movies/details"),
                             title: Text(state.movies[index].title),
                           ),
                           if (index != 0 && index % 20 == 0)
@@ -81,9 +65,10 @@ class _MovieViewState extends State<MovieView> {
                   child: CircularProgressIndicator(),
                 );
               case MovieStatus.initial:
-                const SizedBox.shrink();
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
             }
-            return const SizedBox.shrink();
           },
         )
       ],
@@ -99,18 +84,13 @@ class _MovieViewState extends State<MovieView> {
   }
 
   void _onScroll() {
-    final movieCubit = context.read<MovieCubit>();
-    if (movieCubit.state.movies.isEmpty) return;
-    if (_isBottom && !movieCubit.state.isFetching) {
-      movieCubit.fetchMoviesPopular(
-        context.read<LocalizationCubit>().state?.languageCode ?? "tr",
-      );
+    if (_isBottom) {
+      context.read<MovieBloc>().add(MoviesFetched());
     }
   }
 
   bool get _isBottom {
     if (!_scrollController.hasClients) return false;
-    if (context.read<MovieCubit>().state.hasReachedMax) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
     return currentScroll >= (maxScroll * 0.9);
