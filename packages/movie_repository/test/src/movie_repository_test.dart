@@ -121,7 +121,7 @@ void main() {
               final rawMovie = getMockRawMovie();
               when(
                 () => movieApi.getMoviesPopular(languageCode, 1),
-              ).thenAnswer((invocation) async => [rawMovie]);
+              ).thenAnswer((invocation) async => {rawMovie});
               final actual =
                   await movieRepository.getMoviesPopular(languageCode);
               expect(actual, [

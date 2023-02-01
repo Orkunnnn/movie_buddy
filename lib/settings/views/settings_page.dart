@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
+import 'package:movie_buddy/navigation/router.dart';
 import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
 import 'package:movie_buddy_ui/movie_buddy_ui.dart';
 
@@ -36,15 +37,27 @@ class SettingsPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () => context
-                      .read<LocalizationCubit>()
-                      .setLocale(const Locale("tr")),
+                  onPressed: () {
+                    context
+                        .read<LocalizationCubit>()
+                        .setLocale(const Locale("tr"));
+                    StatefulShellRouteState.of(context).resetBranch(
+                      navigateToDefaultLocation: false,
+                      navigatorKey: RouteConfig.moviesNavigatorKey,
+                    );
+                  },
                   child: const Text("Türkçe"),
                 ),
                 ElevatedButton(
-                  onPressed: () => context
-                      .read<LocalizationCubit>()
-                      .setLocale(const Locale("en")),
+                  onPressed: () {
+                    context
+                        .read<LocalizationCubit>()
+                        .setLocale(const Locale("en"));
+                    StatefulShellRouteState.of(context).resetBranch(
+                      navigatorKey: RouteConfig.moviesNavigatorKey,
+                      navigateToDefaultLocation: false,
+                    );
+                  },
                   child: const Text("English"),
                 )
               ],

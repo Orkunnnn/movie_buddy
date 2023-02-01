@@ -38,6 +38,8 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     final movies = await movieRepository.getMoviesPopular(languageCode);
     emit(
       state.copyWith(
+        hasReachedMax: false,
+        pageNumber: 1,
         movies: movies,
         status: MovieStatus.success,
         key: PageStorageKey(state.key.value + 1),
@@ -55,32 +57,28 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       if (state.status == MovieStatus.initial) {
         final movies = await movieRepository.getMoviesPopular(languageCode);
         return emit(
-          state.copyWith(status: MovieStatus.success, movies: movies),
+          state.copyWith(
+            hasReachedMax: false,
+            pageNumber: 1,
+            status: MovieStatus.success,
+            movies: movies,
+          ),
         );
       }
       final pageNumber = state.pageNumber + 1;
-      final hasReachedMax = state.movies.length >= 100;
       final movies = await movieRepository.getMoviesPopular(
         languageCode,
         pageNumber: pageNumber,
       );
-      hasReachedMax
-          ? emit(
-              state.copyWith(
-                movies: state.movies,
-                hasReachedMax: hasReachedMax,
-                status: MovieStatus.success,
-                pageNumber: pageNumber,
-              ),
-            )
-          : emit(
-              state.copyWith(
-                movies: List.of(state.movies)..addAll(movies),
-                hasReachedMax: hasReachedMax,
-                pageNumber: pageNumber,
-                status: MovieStatus.success,
-              ),
-            );
+      final hasReachedMax = state.movies.length >= 100;
+      emit(
+        state.copyWith(
+          movies: Set.of(state.movies)..addAll(movies),
+          hasReachedMax: hasReachedMax,
+          status: MovieStatus.success,
+          pageNumber: pageNumber,
+        ),
+      );
     } on Exception {
       emit(state.copyWith(status: MovieStatus.failure));
     }

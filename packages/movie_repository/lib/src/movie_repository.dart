@@ -11,13 +11,13 @@ class MovieRepository {
     return MovieDetails.fromRawMovieDetails(movieDetails);
   }
 
-  Future<List<Movie>> getMoviesPopular(
+  Future<Set<Movie>> getMoviesPopular(
     String languageCode, {
     int pageNumber = 1,
   }) async {
     final moviesPopular =
         await _movieApi.getMoviesPopular(languageCode, pageNumber);
-    return moviesPopular.map(Movie.fromRawMovie).toList();
+    return moviesPopular.map(Movie.fromRawMovie).toSet();
   }
 
   Future<List<Movie>> getMoviesTopRated(

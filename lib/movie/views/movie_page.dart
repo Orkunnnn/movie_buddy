@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_nested_navigation/flutter_nested_navigation.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:movie_buddy/movie/bloc/movie_bloc.dart';
+import 'package:movie_buddy_ui/movie_buddy_ui.dart';
 
 class MoviePage extends StatelessWidget {
   const MoviePage({super.key});
@@ -30,48 +32,60 @@ class _MovieViewState extends State<MovieView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        BlocBuilder<MovieBloc, MovieState>(
-          builder: (context, state) {
-            switch (state.status) {
-              case MovieStatus.success:
-                return Expanded(
-                  child: ListView.builder(
-                    key: state.key,
-                    controller: _scrollController,
-                    itemCount: state.movies.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          ListTile(
-                            onTap: () => context.go("/movies/details"),
-                            title: Text(state.movies[index].title),
-                          ),
-                          if (index != 0 && index % 20 == 0)
-                            const Divider(
-                              thickness: 1,
-                              color: Colors.red,
-                            )
-                          else
-                            const SizedBox.shrink()
-                        ],
-                      );
-                    },
-                  ),
-                );
-              case MovieStatus.failure:
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              case MovieStatus.initial:
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-            }
-          },
-        )
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          Material(
+            shape: const CircleBorder(),
+            clipBehavior: Clip.hardEdge,
+            color: MovieBuddyColors.transparent,
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Ionicons.search),
+            ),
+          )
+        ],
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BlocBuilder<MovieBloc, MovieState>(
+            builder: (context, state) {
+              switch (state.status) {
+                case MovieStatus.success:
+                  return Expanded(
+                    child: ListView.builder(
+                      physics: const ClampingScrollPhysics(),
+                      key: state.key,
+                      controller: _scrollController,
+                      itemCount: state.hasReachedMax
+                          ? state.movies.length
+                          : state.movies.length + 1,
+                      itemBuilder: (context, index) {
+                        return index >= state.movies.length
+                            ? const BottomLoader()
+                            : ListTile(
+                                onTap: () => context.go(
+                                  "/movies/$index",
+                                  extra: state.movies.elementAt(index),
+                                ),
+                                title:
+                                    Text(state.movies.elementAt(index).title),
+                              );
+                      },
+                    ),
+                  );
+                case MovieStatus.failure:
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                case MovieStatus.initial:
+                  return const Center(child: CircularProgressIndicator());
+              }
+            },
+          )
+        ],
+      ),
     );
   }
 

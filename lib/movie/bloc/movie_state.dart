@@ -6,13 +6,13 @@ class MovieState extends Equatable {
   const MovieState({
     this.status = MovieStatus.initial,
     this.pageNumber = 1,
-    this.movies = const [],
+    this.movies = const {},
     this.hasReachedMax = false,
     this.key = const PageStorageKey(0),
   });
 
   final MovieStatus status;
-  final List<Movie> movies;
+  final Set<Movie> movies;
   final int pageNumber;
   final bool hasReachedMax;
   final PageStorageKey<int> key;
@@ -22,7 +22,7 @@ class MovieState extends Equatable {
 
   MovieState copyWith({
     MovieStatus? status,
-    List<Movie>? movies,
+    Set<Movie>? movies,
     int? pageNumber,
     bool? hasReachedMax,
     PageStorageKey<int>? key,

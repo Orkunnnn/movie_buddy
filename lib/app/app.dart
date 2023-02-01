@@ -49,8 +49,9 @@ class _AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LocalizationCubit, Locale?>(
-      listener: (context, state) =>
-          context.read<MovieBloc>()..add(MoviesLanguageChanged()),
+      listener: (context, state) {
+        context.read<MovieBloc>().add(MoviesLanguageChanged());
+      },
       builder: (context, locale) {
         return BlocBuilder<ThemeCubit, ThemeMode>(
           builder: (context, themeMode) {

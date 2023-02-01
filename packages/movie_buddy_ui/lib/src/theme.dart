@@ -56,8 +56,8 @@ abstract class MovieBuddyTheme {
   static AppBarTheme get _darkAppBarTheme {
     return AppBarTheme(
       systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
       ),
       color: MovieBuddyColors.transparent,
       elevation: 0,
