@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_animate: ^3.1.0
   platform_helper:
     path: ../platform_helper
 

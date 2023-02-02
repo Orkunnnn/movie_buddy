@@ -10,11 +10,13 @@ class RawMovie {
     this.releaseDate,
     this.posterPath,
     this.genres,
+    this.id,
   );
 
   factory RawMovie.fromJson(Map<String, dynamic> json) =>
       _$RawMovieFromJson(json);
 
+  final int id;
   final String title;
   final String overview;
   final String? releaseDate;

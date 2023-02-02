@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nested_navigation/flutter_nested_navigation.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:movie_buddy/movie/bloc/movie_bloc.dart';
 import 'package:movie_buddy_ui/movie_buddy_ui.dart';
 
@@ -34,17 +33,8 @@ class _MovieViewState extends State<MovieView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          Material(
-            shape: const CircleBorder(),
-            clipBehavior: Clip.hardEdge,
-            color: MovieBuddyColors.transparent,
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Ionicons.search),
-            ),
-          )
-        ],
+        title: const Text("Movie Buddy"),
+        centerTitle: true,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -67,7 +57,7 @@ class _MovieViewState extends State<MovieView> {
                             : ListTile(
                                 onTap: () => context.go(
                                   "/movies/$index",
-                                  extra: state.movies.elementAt(index),
+                                  extra: state.movies.elementAt(index).id,
                                 ),
                                 title:
                                     Text(state.movies.elementAt(index).title),

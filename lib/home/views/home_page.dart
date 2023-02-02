@@ -28,24 +28,40 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentIndex = context.watch<NavigationCubit>().state;
     final shellState = StatefulShellRouteState.of(context);
     return Scaffold(
       body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) => _onTap(context, shellState, value),
-        currentIndex: context.watch<NavigationCubit>().state,
-        items: const [
-          BottomNavigationBarItem(label: "Home", icon: Icon(Ionicons.home)),
-          BottomNavigationBarItem(
-            label: "Settings",
-            icon: Icon(Ionicons.settings),
-          )
-        ],
-      ),
+      bottomNavigationBar:
+          _buildNavigationBar(context, shellState, currentIndex),
     );
   }
 
-  void _onTap(
+  NavigationBar _buildNavigationBar(
+    BuildContext context,
+    StatefulShellRouteState shellState,
+    int currentIndex,
+  ) {
+    return NavigationBar(
+      onDestinationSelected: (value) =>
+          _onDestinationSelected(context, shellState, value),
+      selectedIndex: currentIndex,
+      destinations: const [
+        NavigationDestination(
+          selectedIcon: Icon(Ionicons.home),
+          label: "Home",
+          icon: Icon(Ionicons.home_outline),
+        ),
+        NavigationDestination(
+          selectedIcon: Icon(Ionicons.settings),
+          icon: Icon(Ionicons.settings_outline),
+          label: "Settings",
+        ),
+      ],
+    );
+  }
+
+  void _onDestinationSelected(
     BuildContext context,
     StatefulShellRouteState shellState,
     int? index,

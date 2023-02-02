@@ -26,8 +26,9 @@ class RouteConfig {
                 routes: [
                   GoRoute(
                     path: ":movieId",
-                    builder: (context, state) =>
-                        MovieDetailsPage(movie: state.extra! as Movie),
+                    builder: (context, state) => MovieDetailsPage(
+                      movieId: state.extra! as int,
+                    ),
                   )
                 ],
               ),

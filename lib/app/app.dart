@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
 import 'package:movie_buddy/l10n/l10n.dart';
 import 'package:movie_buddy/movie/bloc/movie_bloc.dart';
+import 'package:movie_buddy/movie/bloc/movie_details_bloc.dart';
 import 'package:movie_buddy/navigation/cubit/navigation_cubit.dart';
 import 'package:movie_buddy/navigation/router.dart';
 import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
@@ -35,6 +36,12 @@ class App extends StatelessWidget {
               movieRepository: movieRepository,
               localizationCubit: localizationCubit,
             )..add(MoviesFetched()),
+          ),
+          BlocProvider(
+            create: (_) => MovieDetailsBloc(
+              movieRepository: movieRepository,
+              localizationCubit: localizationCubit,
+            ),
           )
         ],
         child: const _AppView(),
@@ -60,7 +67,11 @@ class _AppView extends StatelessWidget {
               title: "Movie Buddy",
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
-              theme: ThemeData.light(),
+              theme: ThemeData.light(useMaterial3: true).copyWith(
+                tooltipTheme: const TooltipThemeData(
+                  triggerMode: TooltipTriggerMode.manual,
+                ),
+              ),
               darkTheme: MovieBuddyTheme.dark,
               themeMode: themeMode,
               locale: locale,

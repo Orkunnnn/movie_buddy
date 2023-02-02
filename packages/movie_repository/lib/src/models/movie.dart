@@ -9,22 +9,25 @@ class Movie extends Equatable {
     required this.releaseDate,
     required this.posterPathFull,
     required this.genres,
+    required this.id,
   });
 
   factory Movie.fromRawMovie(RawMovie movie) {
     final posterPathFull = movie.posterPath != null
-        ? "https://image.tmdb.org/t/p/original/${movie.posterPath}"
+        ? "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
         : movie.posterPath;
 
     return Movie(
+      id: movie.id,
       title: movie.title,
       overview: movie.overview,
       releaseDate: movie.releaseDate,
       posterPathFull: posterPathFull,
-      genres: movie.genres.map((genreId) => genreId.genre).toList(),
+      genres: movie.genres.map((genreId) => genreId.toGenre).toList(),
     );
   }
 
+  final int id;
   final String title;
   final String overview;
   final String? releaseDate;
@@ -33,11 +36,11 @@ class Movie extends Equatable {
 
   @override
   List<Object?> get props =>
-      [title, overview, releaseDate, posterPathFull, genres];
+      [title, overview, releaseDate, posterPathFull, genres, id];
 }
 
 extension on int {
-  Genre get genre {
+  Genre get toGenre {
     switch (this) {
       case 28:
         return Genre(id: this, name: "Action");

@@ -17,6 +17,7 @@ RawMovie _$RawMovieFromJson(Map<String, dynamic> json) => $checkedCreate(
           $checkedConvert('poster_path', (v) => v as String?),
           $checkedConvert('genre_ids',
               (v) => (v as List<dynamic>).map((e) => e as int).toList()),
+          $checkedConvert('id', (v) => v as int),
         );
         return val;
       },
@@ -28,6 +29,7 @@ RawMovie _$RawMovieFromJson(Map<String, dynamic> json) => $checkedCreate(
     );
 
 Map<String, dynamic> _$RawMovieToJson(RawMovie instance) => <String, dynamic>{
+      'id': instance.id,
       'title': instance.title,
       'overview': instance.overview,
       'release_date': instance.releaseDate,
