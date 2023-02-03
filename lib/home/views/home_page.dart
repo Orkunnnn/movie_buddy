@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nested_navigation/flutter_nested_navigation.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:movie_buddy/l10n/l10n.dart';
 import 'package:movie_buddy/navigation/cubit/navigation_cubit.dart';
 import 'package:movie_buddy/navigation/routes.dart';
 
@@ -29,33 +30,32 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentIndex = context.watch<NavigationCubit>().state;
-    final shellState = StatefulShellRouteState.of(context);
     return Scaffold(
       body: child,
-      bottomNavigationBar:
-          _buildNavigationBar(context, shellState, currentIndex),
+      bottomNavigationBar: _buildNavigationBar(context, currentIndex),
     );
   }
 
   NavigationBar _buildNavigationBar(
     BuildContext context,
-    StatefulShellRouteState shellState,
     int currentIndex,
   ) {
+    final l10n = context.l10n;
+    final shellState = StatefulShellRouteState.of(context);
     return NavigationBar(
       onDestinationSelected: (value) =>
           _onDestinationSelected(context, shellState, value),
       selectedIndex: currentIndex,
-      destinations: const [
+      destinations: [
         NavigationDestination(
-          selectedIcon: Icon(Ionicons.home),
-          label: "Home",
-          icon: Icon(Ionicons.home_outline),
+          selectedIcon: const Icon(Ionicons.home),
+          label: l10n.home,
+          icon: const Icon(Ionicons.home_outline),
         ),
         NavigationDestination(
-          selectedIcon: Icon(Ionicons.settings),
-          icon: Icon(Ionicons.settings_outline),
-          label: "Settings",
+          selectedIcon: const Icon(Ionicons.settings),
+          icon: const Icon(Ionicons.settings_outline),
+          label: l10n.settings,
         ),
       ],
     );

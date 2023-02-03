@@ -26,8 +26,9 @@ dependencies:
     path: packages/movie_buddy_ui
   movie_repository:
     path: packages/movie_repository
+  optimized_cached_image: ^3.0.1
   path_provider: ^2.0.12
-  sliding_up_panel2: ^3.2.2
+  sliding_up_panel: ^2.0.0+1
   stream_transform: ^2.1.0
 
 dev_dependencies:

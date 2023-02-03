@@ -16,7 +16,7 @@ RawMovieDetails _$RawMovieDetailsFromJson(Map<String, dynamic> json) =>
           $checkedConvert('overview', (v) => v as String),
           $checkedConvert('status', (v) => v as String),
           $checkedConvert('tagline', (v) => v as String),
-          $checkedConvert('release_date', (v) => v as String),
+          $checkedConvert('release_date', (v) => v as String?),
           $checkedConvert('poster_path', (v) => v as String?),
           $checkedConvert(
               'genres',

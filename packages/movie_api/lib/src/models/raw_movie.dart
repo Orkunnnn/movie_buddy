@@ -18,7 +18,7 @@ class RawMovie {
 
   final int id;
   final String title;
-  final String overview;
+  final String? overview;
   final String? releaseDate;
   final String? posterPath;
   @JsonKey(name: "genre_ids")

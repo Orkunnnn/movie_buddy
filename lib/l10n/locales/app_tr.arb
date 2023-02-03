@@ -1,3 +1,5 @@
 {
-  "helloWorld": "Merhaba Dünya"
+  "home": "Ana Sayfa",
+  "settings": "Ayarlar",
+  "noOverview": "Bu film hakkında bilgi bulunamadı."
 }

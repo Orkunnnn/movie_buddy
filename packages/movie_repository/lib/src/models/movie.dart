@@ -29,7 +29,7 @@ class Movie extends Equatable {
 
   final int id;
   final String title;
-  final String overview;
+  final String? overview;
   final String? releaseDate;
   final String? posterPathFull;
   final List<Genre> genres;

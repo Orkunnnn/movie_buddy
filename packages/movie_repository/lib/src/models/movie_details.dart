@@ -31,7 +31,7 @@ class MovieDetails extends Equatable {
   final String overview;
   final String status;
   final String tagline;
-  final String releaseDate;
+  final String? releaseDate;
   final String posterPathFull;
   final List<Genre> genres;
 

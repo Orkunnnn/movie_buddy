@@ -22,7 +22,7 @@ class RawMovieDetails {
   final String overview;
   final String status;
   final String tagline;
-  final String releaseDate;
+  final String? releaseDate;
   final String? posterPath;
   final List<RawGenre> genres;
 

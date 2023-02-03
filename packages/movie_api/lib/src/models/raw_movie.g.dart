@@ -12,7 +12,7 @@ RawMovie _$RawMovieFromJson(Map<String, dynamic> json) => $checkedCreate(
       ($checkedConvert) {
         final val = RawMovie(
           $checkedConvert('title', (v) => v as String),
-          $checkedConvert('overview', (v) => v as String),
+          $checkedConvert('overview', (v) => v as String?),
           $checkedConvert('release_date', (v) => v as String?),
           $checkedConvert('poster_path', (v) => v as String?),
           $checkedConvert('genre_ids',

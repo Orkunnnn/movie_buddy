@@ -7,11 +7,12 @@ class ShimmerContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height * 0.63,
       color: Colors.grey.shade300,
     )
         .animate(
           onPlay: (controller) => controller.loop(),
         )
-        .shimmer(duration: const Duration(seconds: 2));
+        .shimmer(duration: const Duration(seconds: 1));
   }
 }

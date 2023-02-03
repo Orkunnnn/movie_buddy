@@ -1,3 +1,5 @@
 {
-  "helloWorld": "Hello World"
+  "home": "Home",
+  "settings": "Settings",
+  "noOverview": "There is no overview for this movie."
 }

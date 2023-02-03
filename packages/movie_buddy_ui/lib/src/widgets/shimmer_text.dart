@@ -14,6 +14,6 @@ class ShimmerText extends StatelessWidget {
         .animate(
           onPlay: (controller) => controller.loop(),
         )
-        .shimmer(duration: const Duration(seconds: 2));
+        .shimmer(duration: const Duration(seconds: 1));
   }
 }
