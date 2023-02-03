@@ -26,6 +26,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
     int movieId,
   ) async {
     try {
+      emit(state.copyWith(movieStatus: MovieStatus.initial));
       final movieDetails = await movieRepository.getMovieDetails(
         movieId,
         localizationCubit.state?.languageCode ?? "tr",
