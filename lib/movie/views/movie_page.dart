@@ -63,6 +63,7 @@ class _MovieViewState extends State<MovieView> {
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) => ShimmerContainer(
+                            borderRadius: BorderRadius.circular(12),
                             width: size.width * 0.5,
                           ),
                           separatorBuilder: (context, index) => const Gap(8),

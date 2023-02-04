@@ -2,17 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class ShimmerContainer extends StatelessWidget {
-  const ShimmerContainer({super.key, this.height, this.width});
+  const ShimmerContainer({
+    super.key,
+    this.height,
+    this.width,
+    this.borderRadius,
+  });
 
   final double? height;
   final double? width;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        borderRadius: borderRadius,
+      ),
       height: height,
       width: width,
-      color: Colors.grey.shade300,
     )
         .animate(
           onPlay: (controller) => controller.loop(),
