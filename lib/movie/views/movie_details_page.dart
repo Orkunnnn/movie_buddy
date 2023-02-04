@@ -114,7 +114,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   OptimizedCacheImage(
                     imageUrl: movieDetails.posterPathFull,
                     imageBuilder: (context, imageProvider) => Container(
-                      height: MediaQuery.of(context).size.height * 0.63,
+                      height: MediaQuery.of(context).size.height * 0.7,
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.fill,
@@ -123,7 +123,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                       ),
                     ),
                     placeholder: (context, url) => ShimmerContainer(
-                      height: MediaQuery.of(context).size.height * 0.63,
+                      height: MediaQuery.of(context).size.height * 0.7,
                     ),
                     errorWidget: (context, url, error) => const Placeholder(),
                   ),
@@ -164,7 +164,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         minHeight: MediaQuery.of(context).size.height * 0.12,
         parallaxOffset: 0.5,
         body: ShimmerContainer(
-          height: MediaQuery.of(context).size.height * 0.63,
+          height: MediaQuery.of(context).size.height * 0.7,
         ),
       ),
     );
