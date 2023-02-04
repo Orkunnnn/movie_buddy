@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_animate: ^3.1.0
+  optimized_cached_image: ^3.0.1
   platform_helper:
     path: ../platform_helper
 

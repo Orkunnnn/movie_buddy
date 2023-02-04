@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class ShimmerContainer extends StatelessWidget {
-  const ShimmerContainer({super.key});
+  const ShimmerContainer({super.key, this.height, this.width});
+
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.63,
+      height: height,
+      width: width,
       color: Colors.grey.shade300,
     )
         .animate(

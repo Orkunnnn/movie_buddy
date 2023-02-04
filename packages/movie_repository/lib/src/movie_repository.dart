@@ -15,8 +15,10 @@ class MovieRepository {
     String languageCode, {
     int pageNumber = 1,
   }) async {
-    final moviesPopular =
-        await _movieApi.getMoviesPopular(languageCode, pageNumber);
+    final moviesPopular = await Future.delayed(
+      const Duration(seconds: 2),
+      () async => _movieApi.getMoviesPopular(languageCode, pageNumber),
+    );
     return moviesPopular.map(Movie.fromRawMovie).toSet();
   }
 

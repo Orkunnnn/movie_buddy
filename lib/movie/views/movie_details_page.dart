@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:movie_buddy/l10n/l10n.dart';
 import 'package:movie_buddy/movie/bloc/movie_bloc.dart';
 import 'package:movie_buddy/movie/bloc/movie_details_bloc.dart';
+import 'package:movie_buddy/movie/widgets/widgets.dart';
 import 'package:movie_buddy_ui/movie_buddy_ui.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -121,7 +122,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                         ),
                       ),
                     ),
-                    placeholder: (context, url) => const ShimmerContainer(),
+                    placeholder: (context, url) => ShimmerContainer(
+                      height: MediaQuery.of(context).size.height * 0.63,
+                    ),
                     errorWidget: (context, url, error) => const Placeholder(),
                   ),
                 ],
@@ -136,32 +139,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 });
               },
             ),
-            Positioned(
-              bottom: _height,
-              right: 20,
-              child: Card(
-                color: Colors.white.withOpacity(0.6),
-                child: Padding(
-                  padding: MovieBuddyPadding.all.small,
-                  child: Stack(
-                    alignment: AlignmentDirectional.center,
-                    children: [
-                      SizedBox(
-                        height: 50,
-                        width: 50,
-                        child: CircularProgressIndicator(
-                          value: movieDetails.voteAverage / 10,
-                        ),
-                      ),
-                      Text(
-                        movieDetails.voteAverage.toStringAsPrecision(2),
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
+            MovieRate(height: _height, movieDetails: movieDetails)
           ],
         ),
       );
@@ -185,7 +163,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         parallaxEnabled: true,
         minHeight: MediaQuery.of(context).size.height * 0.12,
         parallaxOffset: 0.5,
-        body: const ShimmerContainer(),
+        body: ShimmerContainer(
+          height: MediaQuery.of(context).size.height * 0.63,
+        ),
       ),
     );
   }
