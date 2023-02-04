@@ -33,7 +33,6 @@ class _MovieViewState extends State<MovieView> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: _buildAppBar(),
@@ -86,7 +85,6 @@ class _MovieViewState extends State<MovieView> {
     Widget Function() build,
   ) {
     final l10n = context.l10n;
-    final size = MediaQuery.of(context).size;
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

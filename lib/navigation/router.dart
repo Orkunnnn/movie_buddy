@@ -4,7 +4,6 @@ import 'package:movie_buddy/home/views/home_page.dart';
 import 'package:movie_buddy/movie/views/movie_details_page.dart';
 import 'package:movie_buddy/movie/views/movie_page.dart';
 import 'package:movie_buddy/settings/views/settings_page.dart';
-import 'package:movie_repository/movie_repository.dart';
 
 class RouteConfig {
   static final _routerKey = GlobalKey<NavigatorState>();
