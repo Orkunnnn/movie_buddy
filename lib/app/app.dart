@@ -4,6 +4,7 @@ import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
 import 'package:movie_buddy/l10n/l10n.dart';
 import 'package:movie_buddy/movie/bloc/movie_bloc.dart';
 import 'package:movie_buddy/movie/bloc/movie_details_bloc.dart';
+import 'package:movie_buddy/movie/bloc/movie_top_rated_bloc.dart';
 import 'package:movie_buddy/navigation/cubit/navigation_cubit.dart';
 import 'package:movie_buddy/navigation/router.dart';
 import 'package:movie_buddy/theme/cubit/theme_cubit.dart';
@@ -42,6 +43,12 @@ class App extends StatelessWidget {
               movieRepository: movieRepository,
               localizationCubit: localizationCubit,
             ),
+          ),
+          BlocProvider(
+            create: (_) => MovieTopRatedBloc(
+              movieRepository: movieRepository,
+              localizationCubit: localizationCubit,
+            )..add(MoviesFetched()),
           )
         ],
         child: const _AppView(),
@@ -58,6 +65,7 @@ class _AppView extends StatelessWidget {
     return BlocConsumer<LocalizationCubit, Locale?>(
       listener: (context, state) {
         context.read<MovieBloc>().add(MoviesLanguageChanged());
+        context.read<MovieTopRatedBloc>().add(MoviesLanguageChanged());
       },
       builder: (context, locale) {
         return BlocBuilder<ThemeCubit, ThemeMode>(

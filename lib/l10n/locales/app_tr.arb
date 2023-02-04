@@ -2,5 +2,6 @@
   "home": "Ana Sayfa",
   "settings": "Ayarlar",
   "noOverview": "Bu film hakkında bilgi bulunamadı.",
-  "popularMovies": "Popüler Filmler"
+  "popularMovies": "Popüler Filmler",
+  "topRatedMovies": "En Beğenilen Filmler"
 }

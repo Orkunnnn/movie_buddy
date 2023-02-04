@@ -66,7 +66,7 @@ class MovieApi {
         .toSet();
   }
 
-  Future<List<RawMovie>> getMoviesTopRated(
+  Future<Set<RawMovie>> getMoviesTopRated(
     String languageCode,
     int pageNumber,
   ) async {
@@ -91,7 +91,7 @@ class MovieApi {
 
     return results
         .map((e) => RawMovie.fromJson(e as Map<String, dynamic>))
-        .toList();
+        .toSet();
   }
 
   Future<List<RawMovie>> getMoviesNowPlaying(
