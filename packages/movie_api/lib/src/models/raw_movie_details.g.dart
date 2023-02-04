@@ -23,12 +23,14 @@ RawMovieDetails _$RawMovieDetailsFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>)
                   .map((e) => RawGenre.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          $checkedConvert('vote_average', (v) => (v as num).toDouble()),
         );
         return val;
       },
       fieldKeyMap: const {
         'releaseDate': 'release_date',
-        'posterPath': 'poster_path'
+        'posterPath': 'poster_path',
+        'voteAverage': 'vote_average'
       },
     );
 
@@ -40,5 +42,6 @@ Map<String, dynamic> _$RawMovieDetailsToJson(RawMovieDetails instance) =>
       'tagline': instance.tagline,
       'release_date': instance.releaseDate,
       'poster_path': instance.posterPath,
+      'vote_average': instance.voteAverage,
       'genres': instance.genres,
     };

@@ -11,6 +11,7 @@ class MovieDetails extends Equatable {
     required this.releaseDate,
     required this.posterPathFull,
     required this.genres,
+    required this.voteAverage,
   });
 
   factory MovieDetails.fromRawMovieDetails(RawMovieDetails movieDetails) {
@@ -23,6 +24,7 @@ class MovieDetails extends Equatable {
       tagline: movieDetails.tagline,
       releaseDate: movieDetails.releaseDate,
       posterPathFull: posterPathFull,
+      voteAverage: movieDetails.voteAverage,
       genres: movieDetails.genres.map(Genre.fromRawGenre).toList(),
     );
   }
@@ -33,9 +35,18 @@ class MovieDetails extends Equatable {
   final String tagline;
   final String? releaseDate;
   final String posterPathFull;
+  final double voteAverage;
   final List<Genre> genres;
 
   @override
-  List<Object?> get props =>
-      [title, overview, status, tagline, releaseDate, posterPathFull, genres];
+  List<Object?> get props => [
+        title,
+        overview,
+        status,
+        tagline,
+        releaseDate,
+        posterPathFull,
+        genres,
+        voteAverage
+      ];
 }

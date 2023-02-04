@@ -19,6 +19,7 @@ class MovieDetailsPage extends StatefulWidget {
 }
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
+  double _height = 112;
   @override
   void initState() {
     super.initState();
@@ -30,91 +31,138 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
     final movieState = context.watch<MovieDetailsBloc>().state;
     final l10n = context.l10n;
     if (movieState.movieStatus == MovieStatus.success) {
+      final movieDetails = movieState.movieDetails!;
       return Scaffold(
         appBar: AppBar(
-          title: Text(movieState.movieDetails!.title),
+          title: Text(movieDetails.title),
         ),
-        body: SlidingUpPanel(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-          panelBuilder: (ScrollController scrollController) =>
-              SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              children: [
-                Divider(
-                  thickness: 3,
-                  indent: MediaQuery.of(context).size.width * 0.45,
-                  endIndent: MediaQuery.of(context).size.width * 0.45,
-                ),
-                Text(
-                  movieState.movieDetails!.title,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                Padding(
-                  padding: MovieBuddyPadding.all.medium,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Wrap(
-                        alignment: WrapAlignment.center,
-                        children: movieState.movieDetails!.genres
-                            .map(
-                              (e) => SizedBox(
-                                height: 100,
-                                width: 150,
-                                child: Card(
-                                  child: Padding(
-                                    padding: MovieBuddyPadding.all.medium,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(
-                                          Ionicons.film,
-                                          size: 32,
+        body: Stack(
+          children: [
+            SlidingUpPanel(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(20)),
+              panelBuilder: (ScrollController scrollController) =>
+                  SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  children: [
+                    Divider(
+                      thickness: 3,
+                      indent: MediaQuery.of(context).size.width * 0.45,
+                      endIndent: MediaQuery.of(context).size.width * 0.45,
+                    ),
+                    Padding(
+                      padding: MovieBuddyPadding.horizontal.small,
+                      child: Text(
+                        movieDetails.title,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ),
+                    Padding(
+                      padding: MovieBuddyPadding.all.medium,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Wrap(
+                            alignment: WrapAlignment.center,
+                            children: movieDetails.genres
+                                .map(
+                                  (e) => SizedBox(
+                                    height: 100,
+                                    width: 150,
+                                    child: Card(
+                                      child: Padding(
+                                        padding: MovieBuddyPadding.all.medium,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Icon(
+                                              Ionicons.film,
+                                              size: 32,
+                                            ),
+                                            Text(
+                                              e.name,
+                                              textAlign: TextAlign.center,
+                                            )
+                                          ],
                                         ),
-                                        Text(e.name)
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )
-                            .toList(),
+                                )
+                                .toList(),
+                          ),
+                          const Gap(10),
+                          ConditionalText(
+                            condition: movieDetails.overview.isEmpty,
+                            ifTrue: l10n.noOverview,
+                            ifFalse: movieDetails.overview,
+                          ),
+                        ],
                       ),
-                      const Gap(10),
-                      ConditionalText(
-                        condition: movieState.movieDetails!.overview.isEmpty,
-                        ifTrue: l10n.noOverview,
-                        ifFalse: movieState.movieDetails!.overview,
+                    )
+                  ],
+                ),
+              ),
+              parallaxEnabled: true,
+              minHeight: MediaQuery.of(context).size.height * 0.12,
+              parallaxOffset: 0.5,
+              body: Column(
+                children: [
+                  OptimizedCacheImage(
+                    imageUrl: movieDetails.posterPathFull,
+                    imageBuilder: (context, imageProvider) => Container(
+                      height: MediaQuery.of(context).size.height * 0.63,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: imageProvider,
+                        ),
                       ),
+                    ),
+                    placeholder: (context, url) => const ShimmerContainer(),
+                    errorWidget: (context, url, error) => const Placeholder(),
+                  ),
+                ],
+              ),
+              onPanelSlide: (position) {
+                setState(() {
+                  final panelMaxScrollExtent =
+                      500 - MediaQuery.of(context).size.height * 0.12;
+                  _height = panelMaxScrollExtent * position +
+                      MediaQuery.of(context).size.height * 0.12 +
+                      12;
+                });
+              },
+            ),
+            Positioned(
+              bottom: _height,
+              right: 20,
+              child: Card(
+                color: Colors.white.withOpacity(0.6),
+                child: Padding(
+                  padding: MovieBuddyPadding.all.small,
+                  child: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator(
+                          value: movieDetails.voteAverage / 10,
+                        ),
+                      ),
+                      Text(
+                        movieDetails.voteAverage.toStringAsPrecision(2),
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      )
                     ],
                   ),
-                )
-              ],
-            ),
-          ),
-          parallaxEnabled: true,
-          minHeight: MediaQuery.of(context).size.height * 0.12,
-          parallaxOffset: 0.5,
-          body: Column(
-            children: [
-              OptimizedCacheImage(
-                imageUrl: movieState.movieDetails!.posterPathFull,
-                imageBuilder: (context, imageProvider) => Container(
-                  height: MediaQuery.of(context).size.height * 0.63,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: imageProvider,
-                    ),
-                  ),
                 ),
-                placeholder: (context, url) => const ShimmerContainer(),
-                errorWidget: (context, url, error) => const Placeholder(),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       );
     }

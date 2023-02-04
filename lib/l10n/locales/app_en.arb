@@ -1,5 +1,6 @@
 {
   "home": "Home",
   "settings": "Settings",
-  "noOverview": "There is no overview for this movie."
+  "noOverview": "There is no overview for this movie.",
+  "popularMovies": "Popular Movies"
 }

@@ -13,6 +13,7 @@ class RawMovieDetails {
     this.releaseDate,
     this.posterPath,
     this.genres,
+    this.voteAverage,
   );
 
   factory RawMovieDetails.fromJson(Map<String, dynamic> json) =>
@@ -24,6 +25,7 @@ class RawMovieDetails {
   final String tagline;
   final String? releaseDate;
   final String? posterPath;
+  final double voteAverage;
   final List<RawGenre> genres;
 
   Map<String, dynamic> toJson() => _$RawMovieDetailsToJson(this);
