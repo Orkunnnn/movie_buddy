@@ -15,10 +15,8 @@ class MovieRepository {
     String languageCode, {
     int pageNumber = 1,
   }) async {
-    final moviesPopular = await Future.delayed(
-      const Duration(seconds: 2),
-      () async => _movieApi.getMoviesPopular(languageCode, pageNumber),
-    );
+    final moviesPopular =
+        await _movieApi.getMoviesPopular(languageCode, pageNumber);
     return moviesPopular.map(Movie.fromRawMovie).toSet();
   }
 
@@ -31,12 +29,12 @@ class MovieRepository {
     return moviesTopRated.map(Movie.fromRawMovie).toSet();
   }
 
-  Future<List<Movie>> getMoviesNowPlaying(
+  Future<Set<Movie>> getMoviesNowPlaying(
     String languageCode, {
     int pageNumber = 1,
   }) async {
     final moviesNowPlaying =
         await _movieApi.getMoviesNowPlaying(languageCode, pageNumber);
-    return moviesNowPlaying.map(Movie.fromRawMovie).toList();
+    return moviesNowPlaying.map(Movie.fromRawMovie).toSet();
   }
 }

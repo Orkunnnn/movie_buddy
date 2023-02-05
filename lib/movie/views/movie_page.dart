@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:movie_buddy/l10n/l10n.dart';
-import 'package:movie_buddy/movie/bloc/movie_bloc.dart';
+import 'package:movie_buddy/movie/bloc/movie_now_playing_bloc.dart';
+import 'package:movie_buddy/movie/bloc/movie_popular_bloc.dart';
 import 'package:movie_buddy/movie/bloc/movie_top_rated_bloc.dart';
 import 'package:movie_buddy/movie/widgets/movie_card.dart';
 import 'package:movie_buddy_ui/movie_buddy_ui.dart';
@@ -26,12 +27,14 @@ class MovieView extends StatefulWidget {
 class _MovieViewState extends State<MovieView> {
   final _popularScrollController = ScrollController();
   final _topRatedScrollController = ScrollController();
+  final _nowPlayingScrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _popularScrollController.addListener(_onPopularMoviesScroll);
     _topRatedScrollController.addListener(_onTopRatedMoviesScroll);
+    _nowPlayingScrollController.addListener(_onNowPlayingMoviesScroll);
   }
 
   @override
@@ -45,7 +48,7 @@ class _MovieViewState extends State<MovieView> {
           padding: MovieBuddyPadding.all.small,
           child: Column(
             children: [
-              BlocBuilder<MovieBloc, MovieState>(
+              BlocBuilder<MoviePopularBloc, MovieState>(
                 builder: (context, state) {
                   switch (state.status) {
                     case MovieStatus.success:
@@ -97,6 +100,37 @@ class _MovieViewState extends State<MovieView> {
                           child: _buildMovieCards(
                             state: state,
                             scrollController: _topRatedScrollController,
+                          ),
+                        ),
+                      );
+                    case MovieStatus.failure:
+                      return const Center(
+                        child: Text("Fail"),
+                      );
+                  }
+                },
+              ),
+              BlocBuilder<MovieNowPlayingBloc, MovieState>(
+                builder: (context, state) {
+                  switch (state.status) {
+                    case MovieStatus.initial:
+                      return _buildMoviesSection(
+                          context, state, l10n.nowPlayingMovies, () {
+                        return SizedBox(
+                          height: size.height * 0.4,
+                          child: _buildLoadingMovies(),
+                        );
+                      });
+                    case MovieStatus.success:
+                      return _buildMoviesSection(
+                        context,
+                        state,
+                        l10n.nowPlayingMovies,
+                        () => SizedBox(
+                          height: size.height * 0.4,
+                          child: _buildMovieCards(
+                            state: state,
+                            scrollController: _nowPlayingScrollController,
                           ),
                         ),
                       );
@@ -196,13 +230,19 @@ class _MovieViewState extends State<MovieView> {
 
   void _onPopularMoviesScroll() {
     if (_isEnd(_popularScrollController)) {
-      context.read<MovieBloc>().add(MoviesFetched());
+      context.read<MoviePopularBloc>().add(MoviesFetched());
     }
   }
 
   void _onTopRatedMoviesScroll() {
     if (_isEnd(_topRatedScrollController)) {
       context.read<MovieTopRatedBloc>().add(MoviesFetched());
+    }
+  }
+
+  void _onNowPlayingMoviesScroll() {
+    if (_isEnd(_nowPlayingScrollController)) {
+      context.read<MovieNowPlayingBloc>().add(MoviesFetched());
     }
   }
 

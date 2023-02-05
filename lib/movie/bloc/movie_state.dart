@@ -1,4 +1,4 @@
-part of 'movie_bloc.dart';
+part of 'movie_popular_bloc.dart';
 
 enum MovieStatus { initial, success, failure }
 

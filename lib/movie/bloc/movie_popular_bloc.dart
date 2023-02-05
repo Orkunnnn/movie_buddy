@@ -1,12 +1,15 @@
-import 'package:flutter/widgets.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
-import 'package:movie_buddy/movie/bloc/movie_popular_bloc.dart';
 import 'package:movie_buddy/movie/helpers/bloc_helpers.dart';
 import 'package:movie_repository/movie_repository.dart';
 
-class MovieTopRatedBloc extends Bloc<MovieEvent, MovieState> {
-  MovieTopRatedBloc({
+part 'movie_event.dart';
+part 'movie_state.dart';
+
+class MoviePopularBloc extends Bloc<MovieEvent, MovieState> {
+  MoviePopularBloc({
     required this.movieRepository,
     required this.localizationCubit,
   }) : super(const MovieState()) {
@@ -25,7 +28,7 @@ class MovieTopRatedBloc extends Bloc<MovieEvent, MovieState> {
     Emitter<MovieState> emit,
   ) async {
     final languageCode = localizationCubit.state?.languageCode ?? "tr";
-    final movies = await movieRepository.getMoviesTopRated(languageCode);
+    final movies = await movieRepository.getMoviesPopular(languageCode);
     emit(
       state.copyWith(
         hasReachedMax: false,
@@ -45,7 +48,7 @@ class MovieTopRatedBloc extends Bloc<MovieEvent, MovieState> {
     final languageCode = localizationCubit.state?.languageCode ?? "tr";
     try {
       if (state.status == MovieStatus.initial) {
-        final movies = await movieRepository.getMoviesTopRated(languageCode);
+        final movies = await movieRepository.getMoviesPopular(languageCode);
         return emit(
           state.copyWith(
             hasReachedMax: false,
@@ -56,7 +59,7 @@ class MovieTopRatedBloc extends Bloc<MovieEvent, MovieState> {
         );
       }
       final pageNumber = state.pageNumber + 1;
-      final movies = await movieRepository.getMoviesTopRated(
+      final movies = await movieRepository.getMoviesPopular(
         languageCode,
         pageNumber: pageNumber,
       );

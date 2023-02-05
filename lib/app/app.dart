@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_buddy/l10n/cubit/localization_cubit.dart';
 import 'package:movie_buddy/l10n/l10n.dart';
-import 'package:movie_buddy/movie/bloc/movie_bloc.dart';
 import 'package:movie_buddy/movie/bloc/movie_details_bloc.dart';
+import 'package:movie_buddy/movie/bloc/movie_now_playing_bloc.dart';
+import 'package:movie_buddy/movie/bloc/movie_popular_bloc.dart';
 import 'package:movie_buddy/movie/bloc/movie_top_rated_bloc.dart';
 import 'package:movie_buddy/navigation/cubit/navigation_cubit.dart';
 import 'package:movie_buddy/navigation/router.dart';
@@ -33,7 +34,7 @@ class App extends StatelessWidget {
             create: (_) => NavigationCubit(),
           ),
           BlocProvider(
-            create: (_) => MovieBloc(
+            create: (_) => MoviePopularBloc(
               movieRepository: movieRepository,
               localizationCubit: localizationCubit,
             )..add(MoviesFetched()),
@@ -46,6 +47,12 @@ class App extends StatelessWidget {
           ),
           BlocProvider(
             create: (_) => MovieTopRatedBloc(
+              movieRepository: movieRepository,
+              localizationCubit: localizationCubit,
+            )..add(MoviesFetched()),
+          ),
+          BlocProvider(
+            create: (_) => MovieNowPlayingBloc(
               movieRepository: movieRepository,
               localizationCubit: localizationCubit,
             )..add(MoviesFetched()),
@@ -64,8 +71,9 @@ class _AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<LocalizationCubit, Locale?>(
       listener: (context, state) {
-        context.read<MovieBloc>().add(MoviesLanguageChanged());
+        context.read<MoviePopularBloc>().add(MoviesLanguageChanged());
         context.read<MovieTopRatedBloc>().add(MoviesLanguageChanged());
+        context.read<MovieNowPlayingBloc>().add(MoviesLanguageChanged());
       },
       builder: (context, locale) {
         return BlocBuilder<ThemeCubit, ThemeMode>(

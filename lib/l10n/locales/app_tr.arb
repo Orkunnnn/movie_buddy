@@ -3,5 +3,6 @@
   "settings": "Ayarlar",
   "noOverview": "Bu film hakkında bilgi bulunamadı.",
   "popularMovies": "Popüler Filmler",
-  "topRatedMovies": "En Beğenilen Filmler"
+  "topRatedMovies": "En Beğenilen Filmler",
+  "nowPlayingMovies": "Vizyondaki Filmler"
 }
