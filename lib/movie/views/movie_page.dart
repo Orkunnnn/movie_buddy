@@ -70,24 +70,7 @@ class _MovieViewState extends State<MovieView> {
                           context, state, l10n.popularMovies, () {
                         return SizedBox(
                           height: size.height * 0.4,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => SizedBox(
-                              width: size.width * 0.5,
-                              child: Column(
-                                children: [
-                                  ShimmerContainer(
-                                    width: size.width * 0.5,
-                                    height: size.height * 0.3,
-                                  ),
-                                  const Gap(8),
-                                  const ShimmerText()
-                                ],
-                              ),
-                            ),
-                            separatorBuilder: (context, index) => const Gap(8),
-                            itemCount: 10,
-                          ),
+                          child: _buildLoadingMovies(),
                         );
                       });
                   }
@@ -101,23 +84,7 @@ class _MovieViewState extends State<MovieView> {
                           context, state, l10n.topRatedMovies, () {
                         return SizedBox(
                           height: size.height * 0.4,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) => SizedBox(
-                              width: size.width * 0.5,
-                              child: Column(
-                                children: [
-                                  ShimmerContainer(
-                                    width: size.width * 0.5,
-                                    height: size.height * 0.3,
-                                  ),
-                                  const ShimmerText()
-                                ],
-                              ),
-                            ),
-                            separatorBuilder: (context, index) => const Gap(8),
-                            itemCount: 10,
-                          ),
+                          child: _buildLoadingMovies(),
                         );
                       });
                     case MovieStatus.success:
@@ -144,6 +111,28 @@ class _MovieViewState extends State<MovieView> {
           ),
         ),
       ),
+    );
+  }
+
+  ListView _buildLoadingMovies() {
+    final size = MediaQuery.of(context).size;
+    return ListView.separated(
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) => SizedBox(
+        width: size.width * 0.5,
+        child: Column(
+          children: [
+            ShimmerContainer(
+              width: size.width * 0.5,
+              height: size.height * 0.3,
+            ),
+            const Gap(8),
+            const ShimmerText()
+          ],
+        ),
+      ),
+      separatorBuilder: (context, index) => const Gap(8),
+      itemCount: 10,
     );
   }
 
@@ -179,7 +168,7 @@ class _MovieViewState extends State<MovieView> {
           state.hasReachedMax ? state.movies.length : state.movies.length + 1,
       itemBuilder: (context, index) {
         return index >= state.movies.length
-            ? const BottomLoader()
+            ? const Loader()
             : MovieCard(
                 movie: state.movies.elementAt(index),
               );
@@ -206,18 +195,18 @@ class _MovieViewState extends State<MovieView> {
   }
 
   void _onPopularMoviesScroll() {
-    if (_isBottom(_popularScrollController)) {
+    if (_isEnd(_popularScrollController)) {
       context.read<MovieBloc>().add(MoviesFetched());
     }
   }
 
   void _onTopRatedMoviesScroll() {
-    if (_isBottom(_topRatedScrollController)) {
+    if (_isEnd(_topRatedScrollController)) {
       context.read<MovieTopRatedBloc>().add(MoviesFetched());
     }
   }
 
-  bool _isBottom(ScrollController scrollController) {
+  bool _isEnd(ScrollController scrollController) {
     if (!scrollController.hasClients) return false;
     final maxScroll = scrollController.position.maxScrollExtent;
     final currentScroll = scrollController.offset;
