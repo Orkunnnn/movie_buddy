@@ -15,7 +15,7 @@ dependencies:
   flutter_bloc: ^8.1.1
   flutter_localizations:
     sdk: flutter
-  hydrated_bloc: ^9.0.0
+  hydrated_bloc: ^9.1.0
   ionicons: ^0.2.2
   melos: ^2.9.0
   movie_buddy_ui:
