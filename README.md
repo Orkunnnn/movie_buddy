@@ -25,7 +25,7 @@ Uygulamada TMDB API kullanıldı. Ayarlar kısmında tema değişikliği ve dil 
 </p>
 
 Dil değişikliği yapıldığında API'dan çekilen veriler (poster, isim vs.) seçilen dile göre değişmektedir.
-Filmler lazy loading metodu kulanılarak çekilmektedir.
+Filmler lazy loading metodu kullanılarak çekilmektedir.
 
 [ci_badge]: https://github.com/Orkunnnn/movie_buddy/actions/workflows/movie_buddy.yml/badge.svg
 [ci_link]: https://github.com/Orkunnnn/movie_buddy/actions
