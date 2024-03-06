@@ -4,11 +4,12 @@
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![License: MIT][license_badge]][license_link]
 
-Bu projede elde edilen kazanımlar:
-- Test yazma
-- Github Actions kullanarak CI sürecini yönetme
-- BLoC state management kütüphanesinin kullanımı
-- Code coverage sitesi olan CodeCov'a testlerin sonuçları yüklenerek (CI yoluyla) testlerin analizinin yapılması
+The achievements obtained in this project:
+
+- Writing tests
+- Managing the CI process using Github Actions
+- Use of the BLoC state management library
+- Uploading the results of tests to the code coverage site, CodeCov, for analysis through CI
 - Localization
 - Lazy Loading
 <p float="left; padding=10px">
@@ -17,15 +18,15 @@ Bu projede elde edilen kazanımlar:
 <img src="https://user-images.githubusercontent.com/73122679/228958278-e59d034f-c25f-4397-834c-a7febe73b256.png" width="300" />
 </p>
 
-Uygulamada TMDB API kullanıldı. Ayarlar kısmında tema değişikliği ve dil değişikliği seçenekleri bulunmaktadır.
+TMDB API was used in the application. There are theme change and language change options in the settings section.
 
 <p float="left; padding=10px">
 <img src="https://user-images.githubusercontent.com/73122679/228958825-78132387-442d-424c-afcc-60b2969d88db.png" width="300" />
 <img src="https://user-images.githubusercontent.com/73122679/228958876-f53ddd85-a700-43c5-a6be-3145fa2f5114.png" width="300" />
 </p>
 
-Dil değişikliği yapıldığında API'dan çekilen veriler (poster, isim vs.) seçilen dile göre değişmektedir.
-Filmler lazy loading metodu kullanılarak çekilmektedir.
+When the language is changed, the data retrieved from the API (poster, name, etc.) changes according to the selected language.
+Films are fetched using the lazy loading method.
 
 [ci_badge]: https://github.com/Orkunnnn/movie_buddy/actions/workflows/movie_buddy.yml/badge.svg
 [ci_link]: https://github.com/Orkunnnn/movie_buddy/actions
